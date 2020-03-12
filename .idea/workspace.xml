@@ -13,8 +13,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f60b414-4334-4c5f-974b-09bdd2b6fbb1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2020_LS/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/2020_LS/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2020_LS/zadanie_A/acceleration.c" beforeDir="false" afterPath="$PROJECT_DIR$/2020_LS/zadanie_A/acceleration.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2020_LS/zadanie_A2/acceleration.c" beforeDir="false" afterPath="$PROJECT_DIR$/2020_LS/zadanie_A2/acceleration.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +88,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1584036900870</updated>
-      <workItem from="1584036917258" duration="7906000" />
+      <workItem from="1584036917258" duration="8482000" />
     </task>
     <servers />
   </component>

@@ -7,5 +7,5 @@
 
 double acceleration(double x, double v)
 {
-	return -g + K_0 * v*v;
+	return -g + K_0 * v * v;
 }
