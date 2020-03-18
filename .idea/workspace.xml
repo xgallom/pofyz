@@ -13,8 +13,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f60b414-4334-4c5f-974b-09bdd2b6fbb1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/2020_LS/zadanie_A/acceleration.c" beforeDir="false" afterPath="$PROJECT_DIR$/2020_LS/zadanie_A/acceleration.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2020_LS/zadanie_A2/acceleration.c" beforeDir="false" afterPath="$PROJECT_DIR$/2020_LS/zadanie_A2/acceleration.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2020_LS/zadanie_A2/core/parse.c" beforeDir="false" afterPath="$PROJECT_DIR$/2020_LS/zadanie_A2/core/parse.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,11 +55,12 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.build" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/2020_LS/zadanie_A2/equations" />
+      <recent name="$PROJECT_DIR$/2020_LS/zadanie_A" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/2020_LS" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/2020_LS/zadanie_A" />
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.2020_LS_zadanie_A2">
@@ -68,7 +69,7 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="2020_LS_zadanie_A2" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pofyz" TARGET_NAME="2020_LS_zadanie_A2" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pofyz" RUN_TARGET_NAME="2020_LS_zadanie_A2">
+    <configuration name="2020_LS_zadanie_A2" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="80" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pofyz" TARGET_NAME="2020_LS_zadanie_A2" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pofyz" RUN_TARGET_NAME="2020_LS_zadanie_A2">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -88,7 +89,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1584036900870</updated>
-      <workItem from="1584036917258" duration="8482000" />
+      <workItem from="1584036917258" duration="8650000" />
+      <workItem from="1584536272843" duration="9502000" />
     </task>
     <servers />
   </component>
@@ -96,21 +98,53 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1816" height="247" key="GridCell.Tab.0.bottom" timestamp="1584050045027">
+    <state x="417" y="184" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584543341515">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1816" height="247" key="GridCell.Tab.0.bottom/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584050045027" />
-    <state width="1816" height="247" key="GridCell.Tab.0.center" timestamp="1584050045027">
+    <state x="417" y="184" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584543341515" />
+    <state x="713" y="76" key="#xdebugger.evaluate" timestamp="1584543702107">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1816" height="247" key="GridCell.Tab.0.center/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584050045027" />
-    <state width="1816" height="247" key="GridCell.Tab.0.left" timestamp="1584050045026">
+    <state x="713" y="76" key="#xdebugger.evaluate/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584543702107" />
+    <state x="742" y="284" width="426" height="473" key="FileChooserDialogImpl" timestamp="1584540915182">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1816" height="247" key="GridCell.Tab.0.left/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584050045026" />
-    <state width="1816" height="247" key="GridCell.Tab.0.right" timestamp="1584050045027">
+    <state x="742" y="284" width="426" height="473" key="FileChooserDialogImpl/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584540915182" />
+    <state width="1816" height="247" key="GridCell.Tab.0.bottom" timestamp="1584546287520">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1816" height="247" key="GridCell.Tab.0.right/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584050045027" />
+    <state width="1816" height="247" key="GridCell.Tab.0.bottom/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584546287520" />
+    <state width="1816" height="247" key="GridCell.Tab.0.center" timestamp="1584546287519">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1816" height="247" key="GridCell.Tab.0.center/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584546287519" />
+    <state width="1816" height="247" key="GridCell.Tab.0.left" timestamp="1584546287519">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1816" height="247" key="GridCell.Tab.0.left/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584546287519" />
+    <state width="1816" height="247" key="GridCell.Tab.0.right" timestamp="1584546287519">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1816" height="247" key="GridCell.Tab.0.right/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584546287519" />
+    <state width="1816" height="308" key="GridCell.Tab.1.bottom" timestamp="1584543721279">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1816" height="308" key="GridCell.Tab.1.bottom/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584543721279" />
+    <state width="1816" height="308" key="GridCell.Tab.1.center" timestamp="1584543721279">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1816" height="308" key="GridCell.Tab.1.center/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584543721279" />
+    <state width="1816" height="308" key="GridCell.Tab.1.left" timestamp="1584543721279">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1816" height="308" key="GridCell.Tab.1.left/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584543721279" />
+    <state width="1816" height="308" key="GridCell.Tab.1.right" timestamp="1584543721279">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1816" height="308" key="GridCell.Tab.1.right/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584543721279" />
+    <state x="615" y="265" width="690" height="558" key="find.popup" timestamp="1584541607730">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="615" y="265" width="690" height="558" key="find.popup/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1584541607730" />
   </component>
 </project>

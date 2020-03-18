@@ -10,4 +10,4 @@ set(files
         )
 
 add_executable(2020_LS_zadanie_A ${files})
-target_link_libraries(2020_LS_zadanie_A m)
+target_link_libraries(2020_LS_zadanie_A PRIVATE m)

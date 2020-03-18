@@ -4,30 +4,33 @@
 
 #include "rungeKutta.h"
 #include "../constants.h"
-#include "../acceleration.h"
+#include "../equations/acceleration.h"
+#include "../equations/velocity.h"
 
 void solveRungeKutta(double *x, double *v)
 {
-	x[0] = x_0;
-	v[0] = v_0;
+	double
+			x_i = x[0] = x_0,
+			v_i = v[0] = v_0;
 
 	for(int i = 1; i < steps; ++i) {
 		const double
-				x_i = x[i - 1],
-				v_i = v[i - 1],
+				v1 = dt * acceleration(x_i, v_i),
+				x1 = dt * velocity(x_i, v_i),
 
-				k1 = dt * acceleration(x_i, v_i),
-				v1 = k1 / 2.0,
+				x2_i = x_i + x1 / 2.0, v2_i = v_i + v1 / 2.0,
+				v2 = dt * acceleration(x2_i, v2_i),
+				x2 = dt * velocity(x2_i, v2_i),
 
-				k2 = dt * acceleration(x_i + v1 * dt, v_i + v1),
-				v2 = k2 / 2.0,
+				x3_i = x_i + x2 / 2.0, v3_i = v_i + v2 / 2.0,
+				v3 = dt * acceleration(x3_i, v3_i),
+				x3 = dt * velocity(x3_i, v3_i),
 
-				k3 = dt * acceleration(x_i + v2 * dt, v_i + v2),
-				v3 = k3,
+				x4_i = x_i + x3, v4_i = v_i + v3,
+				v4 = dt * acceleration(x4_i, v4_i),
+				x4 = dt * velocity(x4_i, v4_i);
 
-				k4 = dt * acceleration(x_i + v3 * dt, v_i + v3);
-
-		v[i] = v_i + (k1 + 2.0 * k2 + 2.0 * k3 + k4) / 6.0;
-		x[i] = x_i + v[i] * dt;
+		x_i = x[i] = x_i + (x1 + 2.0 * x2 + 2.0 * x3 + x4) / 6.0;
+		v_i = v[i] = v_i + (v1 + 2.0 * v2 + 2.0 * v3 + v4) / 6.0;
 	}
 }

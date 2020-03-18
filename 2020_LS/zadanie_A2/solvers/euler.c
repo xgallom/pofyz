@@ -4,7 +4,7 @@
 
 #include "euler.h"
 #include "../constants.h"
-#include "../acceleration.h"
+#include "../equations/acceleration.h"
 
 void solveEuler(double *x, double *v)
 {

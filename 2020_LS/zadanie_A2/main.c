@@ -1,13 +1,16 @@
-#include <stdio.h>
-
+#include "core/vector.h"
+#include "core/output.h"
+#include "constants.h"
 #include "solvers/euler.h"
 #include "solvers/rungeKutta.h"
-#include "utility.h"
-#include "constants.h"
-#include "analytical.h"
+#include "equations/analytical.h"
 
-int main()
+#include <stdio.h>
+
+int main(int argc, char *argv[])
 {
+	initializeConstants(parseArguments(argc, argv));
+
 	double
 			*x = vectorDouble(steps),
 			*v = vectorDouble(steps);
@@ -29,6 +32,9 @@ int main()
 			tD(),
 			vD()
 	);
+
+	deleteVector(x);
+	deleteVector(v);
 
 	return 0;
 }

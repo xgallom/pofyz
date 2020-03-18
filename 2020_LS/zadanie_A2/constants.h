@@ -5,11 +5,13 @@
 #ifndef POFYZ_2020_LS_ZADANIE_A_CONSTANTS_H
 #define POFYZ_2020_LS_ZADANIE_A_CONSTANTS_H
 
+#include "arguments.h"
+
 #include <math.h>
 
 #define steps   500
 
-#define x_0     80.0
+extern double x_0;
 #define v_0     0.0
 #define dt      0.01
 
@@ -31,9 +33,11 @@
 #define K_0     (0.5 * C * S * ro_0 / m)
 
 #define v_inf2  (g / K_0)
-#define v_inf() sqrt(v_inf2)
+extern double v_inf;
 
 #define kappa   (M * g / (R * T))
 #define K(x)    (K_0 * exp(-kappa * x))
+
+void initializeConstants(Arguments arguments);
 
 #endif //POFYZ_2020_LS_ZADANIE_A_CONSTANTS_H

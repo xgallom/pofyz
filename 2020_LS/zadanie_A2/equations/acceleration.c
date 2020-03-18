@@ -3,7 +3,7 @@
 //
 
 #include "acceleration.h"
-#include "constants.h"
+#include "../constants.h"
 
 double acceleration(double x, double v)
 {
