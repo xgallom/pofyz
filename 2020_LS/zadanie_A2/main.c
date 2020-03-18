@@ -33,8 +33,8 @@ int main(int argc, char *argv[])
 			vD()
 	);
 
-	deleteVector(x);
-	deleteVector(v);
+	deleteVector((void **) &x);
+	deleteVector((void **) &v);
 
 	return 0;
 }

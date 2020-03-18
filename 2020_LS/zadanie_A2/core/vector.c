@@ -16,7 +16,8 @@ double *vectorDouble(size_t length)
 	return result;
 }
 
-void deleteVector(void *vector)
+void deleteVector(void **vector)
 {
-	free(vector);
+	free(*vector);
+	*vector = NULL;
 }

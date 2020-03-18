@@ -8,6 +8,6 @@
 #include <stddef.h>
 
 double *vectorDouble(size_t length);
-void deleteVector(void *vector);
+void deleteVector(void **vector);
 
 #endif //POFYZ_2020_LS_ZADANIE_A2_CORE_VECTOR_H
