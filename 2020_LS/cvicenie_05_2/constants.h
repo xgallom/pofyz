@@ -5,11 +5,7 @@
 #ifndef POFYZ_2020_LS_ZADANIE_A_CONSTANTS_H
 #define POFYZ_2020_LS_ZADANIE_A_CONSTANTS_H
 
-#include "arguments.h"
-
 #include <math.h>
-
-#define steps   500
 
 // SIMULATION PARAMETERS
 extern double
@@ -32,6 +28,9 @@ extern double
 		v_inf,
 		kappa;
 
+// FIXED CONSTANT PARAMETERS
+#define steps   500
+
 #define g       9.80665
 #define R       8.3144598
 #define p_0     101.325e3
@@ -44,6 +43,7 @@ extern double
 #define M       (p_N2 * M_N2 + p_O2 * M_O2)
 #define K(x)    (K_0 * exp(-kappa * (x)))
 
-void initializeConstants(struct Arguments arguments);
+struct Arguments;
+void initializeConstants(const struct Arguments *arguments);
 
 #endif //POFYZ_2020_LS_ZADANIE_A_CONSTANTS_H

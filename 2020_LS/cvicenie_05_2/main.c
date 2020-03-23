@@ -2,6 +2,7 @@
 #include "core/file.h"
 #include "core/output.h"
 #include "constants.h"
+#include "arguments.h"
 #include "solvers/rungeKutta.h"
 #include "solvers/statistics.h"
 
@@ -28,7 +29,7 @@ int main(int argc, char *argv[])
 		const double temperature = T_FOR(i);
 
 		arguments.parameter.T = temperature;
-		initializeConstants(arguments);
+		initializeConstants(&arguments);
 
 		size_t length = solveRungeKutta(&x, &v);
 		printf("Runge Kutta solution for T=%f: %zu\n", temperature, length);

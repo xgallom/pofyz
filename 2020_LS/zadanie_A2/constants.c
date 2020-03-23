@@ -3,6 +3,7 @@
 //
 
 #include "constants.h"
+#include "arguments.h"
 
 // SIMULATION PARAMETERS
 double
@@ -25,18 +26,18 @@ double
 		v_inf = 0.0,
 		kappa = 0.0;
 
-void initializeConstants(struct Arguments arguments)
+void initializeConstants(const struct Arguments *arguments)
 {
 	// SIMULATION PARAMETERS
-	x_0 = arguments.parameters[PARAMETER_x_0];
-	v_0 = arguments.parameters[PARAMETER_v_0];
-	dt = arguments.parameters[PARAMETER_dt];
+	x_0 = arguments->parameters[PARAMETER_x_0];
+	v_0 = arguments->parameters[PARAMETER_v_0];
+	dt = arguments->parameters[PARAMETER_dt];
 
 	// OBJECT PARAMETERS
-	m = arguments.parameters[PARAMETER_m];
-	S = arguments.parameters[PARAMETER_S];
-	C = arguments.parameters[PARAMETER_C];
-	T = arguments.parameters[PARAMETER_T];
+	m = arguments->parameters[PARAMETER_m];
+	S = arguments->parameters[PARAMETER_S];
+	C = arguments->parameters[PARAMETER_C];
+	T = arguments->parameters[PARAMETER_T];
 
 	// CALCULATED CONSTANT PARAMETERS
 	ro_0 = M * p_0 / (R * T);

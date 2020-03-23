@@ -36,19 +36,22 @@ static const char *ParametersTable[PARAMETER_COUNT] = {
 		"T"
 };
 
+static const char *ParametersDetailsTable[PARAMETER_COUNT][2] = {
+		{"m",   "[up] Initial height of fall"},
+		{"m/s", "[up] Initial fall velocity"},
+		{"s",   "Time step of simulation"},
+
+		{"kg",  "Mass of falling object"},
+		{"m2",  "Effective area of falling object"},
+		{"-",   "Drag coefficient"},
+		{"K",   "Temperature of air"}
+};
+
+#define PARAMETERS_DETAILS_UNIT 0
+#define PARAMETERS_DETAILS_DESC 1
+
 static void printUsage(const char *programName)
 {
-	static const char *ParametersDetailsTable[PARAMETER_COUNT][2] = {
-			{"[m]",   "[up] Initial height of fall"},
-			{"[m/s]", "[up] Initial fall velocity"},
-			{"[s]",   "Time step of simulation"},
-
-			{"[kg]",  "Mass of falling object"},
-			{"[m2]",  "Effective area of falling object"},
-			{"[-]",   "Drag coefficient"},
-			{"[K]",   "Temperature of air"}
-	};
-
 	printf(
 			"Usage:\n"
 			"  %s [--{parameter}={value} ...]\n"
@@ -56,12 +59,17 @@ static void printUsage(const char *programName)
 			programName
 	);
 
-	for(int i = 0; i < PARAMETER_COUNT; ++i)
-		printf("    %4s %5s: %s\n",
-			   ParametersTable[i],
-			   ParametersDetailsTable[i][0],
-			   ParametersDetailsTable[i][1]
+	char unit[5] = {};
+
+	for(int i = 0; i < PARAMETER_COUNT; ++i) {
+		sprintf(unit, "[%s]", ParametersDetailsTable[i][PARAMETERS_DETAILS_UNIT]);
+		printf(
+				"    %4s %5s: %s\n",
+				ParametersTable[i],
+				unit,
+				ParametersDetailsTable[i][PARAMETERS_DETAILS_DESC]
 		);
+	}
 
 	printf("\n"
 		   "  %s " HELP_ARGUMENT "\n"
@@ -163,10 +171,18 @@ struct Arguments parseArguments(int argc, char *argv[])
 		parseArgument(&arguments, i, argument + 2, argument + length, programName);
 	}
 
+	return arguments;
+}
+
+void dumpParameters(const struct Arguments *arguments)
+{
 	printf("Simulating with parameters:\n");
 	for(int i = 0; i < PARAMETER_COUNT; ++i)
-		printf("%4s = %f\n", ParametersTable[i], arguments.parameters[i]);
+		printf(
+				"%4s = %8g %s\n",
+				ParametersTable[i],
+				arguments->parameters[i],
+				ParametersDetailsTable[i][PARAMETERS_DETAILS_UNIT]
+		);
 	printf("\n\n");
-
-	return arguments;
 }

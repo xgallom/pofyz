@@ -1,6 +1,7 @@
 #include "core/vector.h"
 #include "core/output.h"
 #include "constants.h"
+#include "arguments.h"
 #include "solvers/euler.h"
 #include "solvers/rungeKutta.h"
 #include "equations/analytical.h"
@@ -9,7 +10,9 @@
 
 int main(int argc, char *argv[])
 {
-	initializeConstants(parseArguments(argc, argv));
+	const struct Arguments arguments = parseArguments(argc, argv);
+	dumpParameters(&arguments);
+	initializeConstants(&arguments);
 
 	struct Vector
 			x = vectorDouble(steps),
