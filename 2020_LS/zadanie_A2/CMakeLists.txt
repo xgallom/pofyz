@@ -17,8 +17,9 @@ set(files
         equations/velocity.c
 
         solvers/euler.c
-        solvers/solveGeneric.c
         solvers/rungeKutta.c
+        solvers/solveGeneric.c
+        solvers/statistics.c
         )
 
 add_executable(2020_LS_zadanie_A2 ${files})
