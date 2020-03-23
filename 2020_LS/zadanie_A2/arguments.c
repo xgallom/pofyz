@@ -165,7 +165,7 @@ struct Arguments parseArguments(int argc, char *argv[])
 		}
 
 		invalidArgument(
-				length < 2 ||
+				length < 3 ||
 				argument[0] != DASH_CHARACTER ||
 				argument[1] != DASH_CHARACTER,
 				i, argument, programName
