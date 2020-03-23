@@ -4,6 +4,7 @@
 
 #include "constants.h"
 #include "arguments.h"
+#include "core/error.h"
 
 // SIMULATION PARAMETERS
 double
@@ -29,15 +30,17 @@ double
 void initializeConstants(const struct Arguments *arguments)
 {
 	// SIMULATION PARAMETERS
-	x_0 = arguments->parameters[PARAMETER_x_0];
-	v_0 = arguments->parameters[PARAMETER_v_0];
-	dt = arguments->parameters[PARAMETER_dt];
+	x_0 = arguments->parameter.x_0;
+	v_0 = arguments->parameter.v_0;
+	dt = arguments->parameter.dt;
+
+	fail(x_0 < 0.0, "Invalid value of x_0: %.2f\n", x_0);
 
 	// OBJECT PARAMETERS
-	m = arguments->parameters[PARAMETER_m];
-	S = arguments->parameters[PARAMETER_S];
-	C = arguments->parameters[PARAMETER_C];
-	T = arguments->parameters[PARAMETER_T];
+	m = arguments->parameter.m;
+	S = arguments->parameter.S;
+	C = arguments->parameter.C;
+	T = arguments->parameter.T;
 
 	// CALCULATED CONSTANT PARAMETERS
 	ro_0 = M * p_0 / (R * T);
