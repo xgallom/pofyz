@@ -36,19 +36,20 @@ static const char *ParametersTable[PARAMETER_COUNT] = {
 		"T"
 };
 
-static const char *ParametersDetailsTable[PARAMETER_COUNT][2] = {
-		{"m",   "[up] Initial height of fall"},
-		{"m/s", "[up] Initial fall velocity"},
+#define PARAMETERS_DETAILS_UNIT  0
+#define PARAMETERS_DETAILS_DESC  1
+#define PARAMETERS_DETAILS_COUNT 2
+
+static const char *ParametersDetailsTable[PARAMETER_COUNT][PARAMETERS_DETAILS_COUNT] = {
+		{"m",   "Initial height of fall (positive upwards)"},
+		{"m/s", "Initial fall velocity  (positive upwards)"},
 		{"s",   "Time step of simulation"},
 
 		{"kg",  "Mass of falling object"},
 		{"m2",  "Effective area of falling object"},
-		{"-",   "Drag coefficient"},
+		{NULL,   "Drag coefficient"},
 		{"K",   "Temperature of air"}
 };
-
-#define PARAMETERS_DETAILS_UNIT 0
-#define PARAMETERS_DETAILS_DESC 1
 
 static void printUsage(const char *programName)
 {
@@ -59,14 +60,15 @@ static void printUsage(const char *programName)
 			programName
 	);
 
-	char unit[5] = {};
+	char unitRepresentation[6] = {};
 
 	for(int i = 0; i < PARAMETER_COUNT; ++i) {
-		sprintf(unit, "[%s]", ParametersDetailsTable[i][PARAMETERS_DETAILS_UNIT]);
+		const char *unit = ParametersDetailsTable[i][PARAMETERS_DETAILS_UNIT];
+		snprintf(unitRepresentation, 6, "[%s]", unit ? unit : "-");
 		printf(
-				"    %4s %5s: %s\n",
+				"    %5s %-5s - %s\n",
 				ParametersTable[i],
-				unit,
+				unitRepresentation,
 				ParametersDetailsTable[i][PARAMETERS_DETAILS_DESC]
 		);
 	}
@@ -177,12 +179,15 @@ struct Arguments parseArguments(int argc, char *argv[])
 void dumpParameters(const struct Arguments *arguments)
 {
 	printf("Simulating with parameters:\n");
-	for(int i = 0; i < PARAMETER_COUNT; ++i)
+	for(int i = 0; i < PARAMETER_COUNT; ++i) {
+		const char *unit = ParametersDetailsTable[i][PARAMETERS_DETAILS_UNIT];
+
 		printf(
-				"%4s = %8g %s\n",
+				"%4s = %8.2f %s\n",
 				ParametersTable[i],
 				arguments->parameters[i],
-				ParametersDetailsTable[i][PARAMETERS_DETAILS_UNIT]
+				unit ? unit : ""
 		);
+	}
 	printf("\n\n");
 }
