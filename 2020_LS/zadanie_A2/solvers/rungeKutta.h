@@ -5,6 +5,10 @@
 #ifndef POFYZ_2020_LS_ZADANIE_A_SOLVERS_RUNGEKUTTA_H
 #define POFYZ_2020_LS_ZADANIE_A_SOLVERS_RUNGEKUTTA_H
 
-void solveRungeKutta(double *x, double *v);
+#include <stddef.h>
+
+struct Vector;
+
+size_t solveRungeKutta(struct Vector *x, struct Vector *v);
 
 #endif //POFYZ_2020_LS_ZADANIE_A_SOLVERS_RUNGEKUTTA_H

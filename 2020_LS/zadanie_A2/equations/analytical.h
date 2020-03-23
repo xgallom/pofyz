@@ -5,7 +5,11 @@
 #ifndef POFYZ_2020_LS_ZADANIE_A_ANALYTICAL_H
 #define POFYZ_2020_LS_ZADANIE_A_ANALYTICAL_H
 
-void analytical(double *x, double *v);
+#include <stddef.h>
+
+struct Vector;
+
+size_t analytical(struct Vector *x, struct Vector *v);
 double tD();
 double vD();
 

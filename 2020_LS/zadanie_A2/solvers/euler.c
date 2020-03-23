@@ -3,18 +3,21 @@
 //
 
 #include "euler.h"
+#include "solveGeneric.h"
 #include "../constants.h"
 #include "../equations/acceleration.h"
 
-void solveEuler(double *x, double *v)
+static void iterateEuler(double *x, double *v, size_t length)
 {
-	x[0] = x_0;
-	v[0] = v_0;
-
-	for(int i = 1; i < steps; ++i) {
+	for(int i = 1; i < length; ++i) {
 		const double a = acceleration(x[i - 1], v[i - 1]);
 
 		v[i] = v[i - 1] + a * dt;
 		x[i] = x[i - 1] + v[i] * dt;
 	}
+}
+
+size_t solveEuler(struct Vector *x, struct Vector *v)
+{
+	return solveGeneric(iterateEuler, x, v);
 }

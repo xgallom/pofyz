@@ -3,17 +3,18 @@
 //
 
 #include "rungeKutta.h"
+#include "solveGeneric.h"
 #include "../constants.h"
 #include "../equations/acceleration.h"
 #include "../equations/velocity.h"
 
-void solveRungeKutta(double *x, double *v)
+static void iterateRungeKutta(double *x, double *v, size_t length)
 {
 	double
-			x_i = x[0] = x_0,
-			v_i = v[0] = v_0;
+			x_i = x[0],
+			v_i = v[0];
 
-	for(int i = 1; i < steps; ++i) {
+	for(int i = 1; i < length; ++i) {
 		const double
 				v1 = dt * acceleration(x_i, v_i),
 				x1 = dt * velocity(x_i, v_i),
@@ -33,4 +34,9 @@ void solveRungeKutta(double *x, double *v)
 		x_i = x[i] = x_i + (x1 + 2.0 * x2 + 2.0 * x3 + x4) / 6.0;
 		v_i = v[i] = v_i + (v1 + 2.0 * v2 + 2.0 * v3 + v4) / 6.0;
 	}
+}
+
+size_t solveRungeKutta(struct Vector *x, struct Vector *v)
+{
+	return solveGeneric(iterateRungeKutta, x, v);
 }

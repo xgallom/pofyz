@@ -4,10 +4,19 @@
 
 #include "analytical.h"
 #include "../constants.h"
+#include "../core/vector.h"
 
-void analytical(double *x, double *v)
+size_t analytical(struct Vector *x_vec, struct Vector *v_vec)
 {
-	for(int i = 0; i < steps; ++i) {
+	const size_t length = ceil(tD() / dt);
+	resize(x_vec, length);
+	resize(v_vec, length);
+
+	double
+			*const x = asDouble(x_vec),
+			*const v = asDouble(v_vec);
+
+	for(int i = 0; i < length; ++i) {
 		const double
 				t = i * dt,
 				angle = g * t / v_inf;
@@ -15,6 +24,8 @@ void analytical(double *x, double *v)
 		x[i] = x_0 - v_inf2 * log(cosh(angle)) / g;
 		v[i] = -v_inf * tanh(angle);
 	}
+
+	return length;
 }
 
 double tD()

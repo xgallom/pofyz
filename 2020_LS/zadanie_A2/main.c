@@ -11,30 +11,33 @@ int main(int argc, char *argv[])
 {
 	initializeConstants(parseArguments(argc, argv));
 
-	double
-			*x = vectorDouble(steps),
-			*v = vectorDouble(steps);
+	struct Vector
+			x = vectorDouble(steps),
+			v = vectorDouble(steps);
 
-	solveEuler(x, v);
-	outputDoubles("euler.txt", x, v, steps);
+	size_t length = solveEuler(&x, &v);
+	printf("Euler solution steps: %zu\n", length);
+	outputDoubles("euler.txt", asCDouble(&x), asCDouble(&v), length);
 
-	solveRungeKutta(x, v);
-	outputDoubles("rungeKutta.txt", x, v, steps);
+	length = solveRungeKutta(&x, &v);
+	printf("Runge Kutta solution steps: %zu\n", length);
+	outputDoubles("rungeKutta.txt", asCDouble(&x), asCDouble(&v), length);
 
-	analytical(x, v);
-	outputDoubles("analytical.txt", x, v, steps);
+	length = analytical(&x, &v);
+	printf("Analytical solution steps: %zu\n", length);
+	outputDoubles("analytical.txt", asCDouble(&x), asCDouble(&v), length);
 
 	printf(
-			"M: %f kg/mol\n"
-			"tD: %f s\n"
-			"vD: %f m/s\n",
+			"\nM: %f kg/mol\n"
+			"Analytical tD: %f s\n"
+			"Analytical vD: %f m/s\n",
 			M,
 			tD(),
 			vD()
 	);
 
-	deleteVector((void **) &x);
-	deleteVector((void **) &v);
+	delete(&x);
+	delete(&v);
 
 	return 0;
 }

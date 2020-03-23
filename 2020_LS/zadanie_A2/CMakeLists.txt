@@ -1,4 +1,4 @@
-project(zadanie_A C)
+project(2020_LS_zadanie_A2 C)
 
 set(files
         main.c
@@ -17,6 +17,7 @@ set(files
         equations/velocity.c
 
         solvers/euler.c
+        solvers/solveGeneric.c
         solvers/rungeKutta.c
         )
 

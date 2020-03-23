@@ -1,3 +1,5 @@
+project(2020_LS_zadanie_A C)
+
 set(files
         main.c
         acceleration.c
