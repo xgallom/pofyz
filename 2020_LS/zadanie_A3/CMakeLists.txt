@@ -2,8 +2,9 @@ project(2020_LS_zadanie_A3 C)
 
 set(files
         main.c
-        arguments.c
         constants.c
+
+        arguments/arguments.c
         arguments/argumentsTable.c
         arguments/dataFileTables.c
         arguments/parameterTables.c

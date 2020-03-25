@@ -4,20 +4,20 @@
 
 #include "arguments.h"
 #include "parameterTables.h"
-#include "core/error.h"
-#include "core/toStr.h"
-#include "core/exit.h"
-#include "core/parse.h"
-#include "core/rootPath.h"
+#include "dataFileTables.h"
+#include "argumentsTable.h"
+#include "../core/error.h"
+#include "../core/toStr.h"
+#include "../core/exit.h"
+#include "../core/parse.h"
+#include "../core/rootPath.h"
 
 #include <stdio.h>
 #include <string.h>
 
 #define FIRST_ARGUMENT 1
 #define MINIMUM_ARGUMENTS 0
-#define MAXIMUM_ARGUMENTS PARAMETER_COUNT
 #define MINIMUM_ARGC (FIRST_ARGUMENT + MINIMUM_ARGUMENTS)
-#define MAXIMUM_ARGC (FIRST_ARGUMENT + MAXIMUM_ARGUMENTS)
 
 #define HELP_ARGUMENT "--help"
 #define DASH_CHARACTER '-'
@@ -27,23 +27,30 @@ static void printUsage(const char *programName)
 {
 	printf(
 			"Usage:\n"
-			"  %s [--{parameter}={value} ...]\n"
-			"    executes program with custom parameters:\n",
+			"  %s [--{parameter}={value} ...] [--{data_file}={value} ...]\n",
 			programName
 	);
 
+	printf("  executes program with custom parameters:\n");
 	char unitRepresentation[6] = {};
-
 	for(int i = 0; i < PARAMETER_COUNT; ++i) {
 		const char *unit = ParametersDetailsTable[i][PARAMETERS_DETAILS_UNIT];
 		snprintf(unitRepresentation, 6, "[%s]", unit ? unit : "-");
 		printf(
-				"    %5s %-5s - %s\n",
+				"    %10s %-5s - %s\n",
 				ParametersTable[i],
 				unitRepresentation,
 				ParametersDetailsTable[i][PARAMETERS_DETAILS_DESC]
 		);
 	}
+
+	printf("\n  executes program with custom data files:\n");
+	for(int i = 0; i < DATAFILE_COUNT; ++i)
+		printf(
+				"    %16s - %s\n",
+				DataFilesTable[i],
+				DataFilesDetailsTable[i][DATAFILES_DETAILS_DESC]
+				);
 
 	printf("\n"
 		   "  %s " HELP_ARGUMENT "\n"
@@ -62,14 +69,35 @@ static inline void invalidArgument(int check, int index, const char *argument, c
 	}
 }
 
-static int findIndex(const char *key)
+static int findIndex(const char *key, const char *keysTable[], size_t keysCount)
 {
-	for(int index = 0; index < PARAMETER_COUNT; ++index) {
-		if(strcmp(key, ParametersTable[index]) == 0)
+	for(int index = 0; index < keysCount; ++index) {
+		if(strcmp(key, keysTable[index]) == 0)
 			return index;
 	}
 
-	return PARAMETER_INVALID;
+	return ARGUMENT_INVALID;
+}
+
+static void parseArgumentKeyValue(
+		struct Arguments *arguments,
+		int index,
+		const char *key,
+		const char *value,
+		const char *programName)
+{
+	for(int tableIndex = 0; tableIndex < ARGUMENTS_TABLE_COUNT; ++tableIndex) {
+		const struct ArgumentTable *const argumentTable = ArgumentsTable + tableIndex;
+
+		int keyIndex = findIndex(key, argumentTable->keysTable, argumentTable->keysCount);
+
+		if(keyIndex != ARGUMENT_INVALID) {
+			(*argumentTable->parser)(entryFor(argumentTable, arguments, keyIndex), value);
+			return;
+		}
+	}
+
+	invalidArgument(1, index, key, programName);
 }
 
 static void parseArgument(
@@ -89,11 +117,7 @@ static void parseArgument(
 	invalidArgument(valueStart >= argumentEnd, index, argument, programName);
 
 	*keyEnd = '\0';
-	int parameterIndex = findIndex(argument);
-
-	invalidArgument(parameterIndex == PARAMETER_INVALID, index, argument, programName);
-
-	arguments->parameters[parameterIndex] = parseDouble(valueStart);
+	parseArgumentKeyValue(arguments, index, argument, valueStart, programName);
 }
 
 struct Arguments parseArguments(int argc, char *argv[])
@@ -112,10 +136,13 @@ struct Arguments parseArguments(int argc, char *argv[])
 					.S = 0.2,
 					.C = 0.8,
 					.T = 293.15
+			},
+			.dataFile = {
+					.temperature = NULL_VECTOR,
 			}
 	};
 
-	if(argc < MINIMUM_ARGC || argc > MAXIMUM_ARGC) {
+	if(argc < MINIMUM_ARGC) {
 		error(
 				"Wrong number of arguments supplied, expected between "
 				TO_STR(MINIMUM_ARGC)

@@ -6,6 +6,8 @@
 #define POFYZ_2020_LS_ZADANIE_A2_ARGUMENTS_H
 
 #include "parameters.h"
+#include "dataFiles.h"
+#include "../core/vector.h"
 
 struct Arguments {
 	union {
@@ -21,6 +23,14 @@ struct Arguments {
 					C,
 					T;
 		} parameter;
+	};
+
+	union {
+		struct Vector dataFiles[DATAFILE_COUNT];
+		struct {
+			struct Vector
+					temperature;
+		} dataFile;
 	};
 };
 
