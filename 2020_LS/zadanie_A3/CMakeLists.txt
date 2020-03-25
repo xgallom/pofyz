@@ -15,6 +15,7 @@ set(files
 
         equations/acceleration.c
         equations/analytical.c
+        equations/general.c
         equations/velocity.c
 
         solvers/euler.c
