@@ -5,6 +5,7 @@ set(files
         arguments.c
         constants.c
         parameterTables.c
+        arguments/argumentsTable.c
 
         core/error.c
         core/exit.c
