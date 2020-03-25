@@ -13,6 +13,8 @@ set(files
         core/parse.c
         core/vector.c
 
+        data/temperature.c
+
         equations/acceleration.c
         equations/analytical.c
         equations/general.c
@@ -25,4 +27,14 @@ set(files
         )
 
 add_executable(2020_LS_zadanie_A3 ${files})
+
 target_link_libraries(2020_LS_zadanie_A3 PRIVATE m)
+
+# Copy temperature.txt to output directory
+add_custom_command(TARGET 2020_LS_zadanie_A3 POST_BUILD
+        COMMAND "${CMAKE_COMMAND}" -E copy
+        "${CMAKE_CURRENT_SOURCE_DIR}/data/temperature.txt"
+        "${CMAKE_CURRENT_BINARY_DIR}/data/temperature.txt"
+        DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/data/temperature.txt"
+        COMMENT "Copying \"data/temperature.txt\""
+        )
