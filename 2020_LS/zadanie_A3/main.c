@@ -1,10 +1,13 @@
 #include "core/rootPath.h"
+#include "arguments/arguments.h"
 #include "data/temperature.h"
 
 int main(int argc, char *argv[])
 {
 	initializeRootPath(argc, argv);
-	initializeTemperature();
+	struct Arguments arguments = parseArguments(argc, argv);
+
+	initializeTemperature(&arguments);
 
 	dumpTemperature();
 
