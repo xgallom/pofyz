@@ -5,9 +5,16 @@
 #include "rootPath.h"
 #include "error.h"
 
+#include <stdio.h>
 #include <string.h>
 
-#ifndef ROOT_PATH
+#if defined(USE_STATIC_ROOT_PATH) && defined(ROOT_PATH)
+#define HAS_STATIC_ROOT_PATH 1
+#else
+#define HAS_STATIC_ROOT_PATH 0
+#endif
+
+#if !HAS_STATIC_ROOT_PATH
 #include <libgen.h>
 #endif
 
@@ -17,16 +24,24 @@ void initializeRootPath(int argc, char *argv[])
 {
 	fail(!isNull(&path), "Root path initialized multiple times\n");
 
-#ifdef ROOT_PATH
-	path = stringFrom(ROOT_PATH);
+#if HAS_STATIC_ROOT_PATH
+	path = stringView(ROOT_PATH);
 #else
 	fail(argc <= PROGRAM_NAME_INDEX, "Invalid function arguments supplied to main\n");
-
 	struct Vector programPath = stringFrom(argv[PROGRAM_NAME_INDEX]);
 
 	path = stringFrom(dirname(asString(&programPath)));
 
 	delete(&programPath);
+#endif
+
+	printf("Resolved root path to \"%s\"\n\n", rootPath());
+}
+
+void cleanupRootPath(void)
+{
+#if !HAS_STATIC_ROOT_PATH
+	delete(&path);
 #endif
 }
 

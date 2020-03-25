@@ -22,6 +22,7 @@ struct Vector {
 struct Vector vectorDouble(size_t length);
 struct Vector string(size_t length);
 struct Vector stringFrom(const char *buffer);
+struct Vector stringView(const char *buffer);
 
 size_t resize(struct Vector *vector, size_t newLength);
 size_t extend(struct Vector *vector, size_t lengthExtension);

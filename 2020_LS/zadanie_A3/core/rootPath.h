@@ -10,6 +10,8 @@
 #define PROGRAM_NAME_INDEX 0
 
 void initializeRootPath(int argc, char *argv[]);
+void cleanupRootPath(void);
+
 const char *rootPath(void);
 struct Vector pathFor(const char *relativePath);
 

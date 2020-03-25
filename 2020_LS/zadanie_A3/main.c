@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
 	dumpTemperature();
 
 	cleanupTemperature();
+	cleanupRootPath();
 
 	return 0;
 }

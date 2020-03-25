@@ -28,10 +28,11 @@ set(files
         )
 
 add_executable(2020_LS_zadanie_A3 ${files})
-
 target_link_libraries(2020_LS_zadanie_A3 PRIVATE m)
 
-add_compile_definitions(ROOT_PATH="${CMAKE_CURRENT_BINARY_DIR}")
+# Uncomment this to use statically generated root path
+# target_compile_definitions(2020_LS_zadanie_A3 PRIVATE USE_STATIC_ROOT_PATH)
+target_compile_definitions(2020_LS_zadanie_A3 PRIVATE ROOT_PATH="${CMAKE_CURRENT_BINARY_DIR}")
 
 # Copy temperature.txt to output directory
 add_custom_command(TARGET 2020_LS_zadanie_A3 POST_BUILD

@@ -10,6 +10,7 @@
 
 static const char
 		*TypeChar = "char",
+		*TypeView = "view_char",
 		*TypeDouble = "double",
 		*TypeNull = "NULL";
 
@@ -74,6 +75,16 @@ struct Vector stringFrom(const char *buffer)
 	strcpy(result.data, buffer);
 
 	return result;
+}
+
+struct Vector stringView(const char *buffer)
+{
+	return (struct Vector) {
+		.data = (char *) buffer,
+		.length = strlen(buffer),
+		.entrySize = 0,
+		.type = TypeView,
+	};
 }
 
 size_t resize(struct Vector *vector, size_t newLength)
