@@ -10,7 +10,7 @@
 #include "../core/toStr.h"
 #include "../equations/general.h"
 
-#define FILE_PATH "data/temperature.txt"
+#define FILE_PATH "/data/temperature.txt"
 
 #define ENTRY_x 0
 #define ENTRY_T 1

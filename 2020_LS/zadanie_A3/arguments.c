@@ -8,6 +8,7 @@
 #include "core/toStr.h"
 #include "core/exit.h"
 #include "core/parse.h"
+#include "core/rootPath.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -17,8 +18,6 @@
 #define MAXIMUM_ARGUMENTS PARAMETER_COUNT
 #define MINIMUM_ARGC (FIRST_ARGUMENT + MINIMUM_ARGUMENTS)
 #define MAXIMUM_ARGC (FIRST_ARGUMENT + MAXIMUM_ARGUMENTS)
-
-#define PROGRAM_NAME_INDEX 0
 
 #define HELP_ARGUMENT "--help"
 #define DASH_CHARACTER '-'

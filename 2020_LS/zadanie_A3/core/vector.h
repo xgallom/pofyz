@@ -17,13 +17,24 @@ struct Vector {
 	// 64B/32B = 0.5 L1 cache-line
 };
 
+#define NULL_VECTOR (struct Vector) {.data = NULL, .length = 0, .entrySize = 0, .type = NULL}
+
 struct Vector vectorDouble(size_t length);
+struct Vector string(size_t length);
+struct Vector stringFrom(const char *buffer);
+
 size_t resize(struct Vector *vector, size_t newLength);
 size_t extend(struct Vector *vector, size_t lengthExtension);
 void clear(struct Vector *vector);
 void delete(struct Vector *vector);
 
+int isNull(const struct Vector *vector);
+const char *vectorType(const struct Vector *vector);
+
 double *asDouble(struct Vector *vector);
 const double *asCDouble(const struct Vector *vector);
+
+char *asString(struct Vector *vector);
+const char *asCString(const struct Vector *vector);
 
 #endif //POFYZ_2020_LS_ZADANIE_A2_CORE_VECTOR_H

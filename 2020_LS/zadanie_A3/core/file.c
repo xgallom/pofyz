@@ -4,12 +4,16 @@
 
 #include "file.h"
 #include "error.h"
+#include "rootPath.h"
 
 FILE *file(const char *filePath, const char *flags)
 {
-	FILE *result = fopen(filePath, flags);
+	struct Vector absoluteFilePath = pathFor(filePath);
+	FILE *result = fopen(asCString(&absoluteFilePath), flags);
 
-	fail(result == NULL, "Failed to open file \"%s\"\n", filePath);
+	fail(result == NULL, "Failed to open file \"%s\"\n", asCString(&absoluteFilePath));
+
+	delete(&absoluteFilePath);
 
 	return result;
 }

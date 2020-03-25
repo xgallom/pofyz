@@ -6,32 +6,34 @@
 #include "error.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 static const char
-		TypeDouble[] = "double",
-		TypeNull[] = "NULL";
+		*TypeChar = "char",
+		*TypeDouble = "double",
+		*TypeNull = "NULL";
 
 static void allocate(struct Vector *vector)
 {
-	fail(vector->data != NULL, "Trying to allocate over existing vector of %s\n", vector->type);
+	fail(!isNull(vector), "Trying to allocate over existing vector of %s\n", vector->type);
 
 	vector->data = malloc(vector->entrySize * vector->length);
 
-	fail(vector->data == NULL, "Failed to create %s[%zu]\n", vector->type, vector->length);
+	fail(isNull(vector), "Failed to create %s[%zu]\n", vectorType(vector), vector->length);
 }
 
 static void reallocate(struct Vector *vector)
 {
-	fail(vector->data == NULL, "Trying to reallocate unallocated vector of %s\n", vector->type);
+	fail(isNull(vector), "Trying to reallocate unallocated vector of %s\n", vectorType(vector));
 
 	vector->data = realloc(vector->data, vector->entrySize * vector->length);
 
-	fail(vector->data == NULL, "Failed to resize %s[%zu]\n", vector->type, vector->length);
+	fail(isNull(vector), "Failed to resize %s[%zu]\n", vectorType(vector), vector->length);
 }
 
 static void deallocate(struct Vector *vector)
 {
-	fail(vector->data == NULL, "Trying to deallocate unallocated vector of %s\n", vector->type);
+	fail(isNull(vector), "Trying to deallocate unallocated vector of %s\n", vectorType(vector));
 
 	free(vector->data);
 }
@@ -46,6 +48,30 @@ struct Vector vectorDouble(size_t length)
 	};
 
 	allocate(&result);
+
+	return result;
+}
+
+struct Vector string(size_t length)
+{
+	struct Vector result = {
+			.data = NULL,
+			.length = length,
+			.entrySize = sizeof(char),
+			.type = TypeChar,
+	};
+
+	allocate(&result);
+
+	return result;
+}
+
+struct Vector stringFrom(const char *buffer)
+{
+	const size_t length = strlen(buffer);
+	const struct Vector result = string(length);
+
+	strcpy(result.data, buffer);
 
 	return result;
 }
@@ -81,16 +107,15 @@ void clear(struct Vector *vector)
 void delete(struct Vector *vector)
 {
 	deallocate(vector);
-
-	*vector = (struct Vector) {
-			.data = NULL,
-			.length = 0,
-			.entrySize = 0,
-			.type = TypeNull,
-	};
+	*vector = NULL_VECTOR;
 }
+
+int isNull(const struct Vector *vector) { return vector->data == NULL; }
+const char *vectorType(const struct Vector *vector) { return vector->type ? vector->type : TypeNull; }
 
 double *asDouble(struct Vector *vector) { return vector->data; }
 const double *asCDouble(const struct Vector *vector) { return vector->data; }
 
+char *asString(struct Vector *vector) { return vector->data; }
+const char *asCString(const struct Vector *vector) { return vector->data; }
 
