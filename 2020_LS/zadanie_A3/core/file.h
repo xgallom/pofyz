@@ -10,4 +10,8 @@
 FILE *file(const char *filePath, const char *flags);
 void close(FILE *file);
 
+size_t lineCount(FILE *file);
+fpos_t filePosition(FILE *file);
+void setFilePosition(FILE *file, const fpos_t *position);
+
 #endif //POFYZ_2020_LS_ZADANIE_A2_CORE_FILE_H
