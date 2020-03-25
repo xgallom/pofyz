@@ -16,8 +16,6 @@
 #include <string.h>
 
 #define FIRST_ARGUMENT 1
-#define MINIMUM_ARGUMENTS 0
-#define MINIMUM_ARGC (FIRST_ARGUMENT + MINIMUM_ARGUMENTS)
 
 #define HELP_ARGUMENT "--help"
 #define DASH_CHARACTER '-'
@@ -141,18 +139,6 @@ struct Arguments parseArguments(int argc, char *argv[])
 					.temperature = NULL_VECTOR,
 			}
 	};
-
-	if(argc < MINIMUM_ARGC) {
-		error(
-				"Wrong number of arguments supplied, expected between "
-				TO_STR(MINIMUM_ARGC)
-				" and "
-				TO_STR(MAXIMUM_ARGC)
-				"\n\n"
-		);
-		printUsage(programName);
-		exitFailure();
-	}
 
 	for(int i = FIRST_ARGUMENT; i < argc; ++i) {
 		char *const argument = argv[i];
