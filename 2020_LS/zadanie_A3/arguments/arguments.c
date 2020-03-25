@@ -50,7 +50,7 @@ static void printUsage(const char *programName)
 				"    %16s - %s\n",
 				DataFilesTable[i],
 				DataFilesDetailsTable[i][DATAFILES_DETAILS_DESC]
-				);
+		);
 
 	printf("\n"
 		   "  %s " HELP_ARGUMENT "\n"
@@ -175,18 +175,34 @@ struct Arguments parseArguments(int argc, char *argv[])
 	return arguments;
 }
 
-void dumpParameters(const struct Arguments *arguments)
+void dumpArguments(const struct Arguments *arguments)
 {
 	printf("Simulating with parameters:\n");
 	for(int i = 0; i < PARAMETER_COUNT; ++i) {
 		const char *unit = ParametersDetailsTable[i][PARAMETERS_DETAILS_UNIT];
 
 		printf(
-				"%4s = %8.2f %s\n",
+				"%16s = %8.2f %s\n",
 				ParametersTable[i],
 				arguments->parameters[i],
 				unit ? unit : ""
 		);
 	}
-	printf("\n\n");
+
+	printf("\nSimulating with dataFiles:\n");
+	for(int i = 0; i < DATAFILE_COUNT; ++i) {
+		const char *dataFile = asCString(arguments->dataFiles + i);
+		const char *formatString = dataFile ?  : "%16s : %s\n";
+
+		if(dataFile)
+			printf(
+					"%16s : \"%s\"\n",
+					DataFilesTable[i],
+					dataFile
+			);
+		else
+			printf("%16s : <default>\n", DataFilesTable[i]);
+	}
+
+	printf("\n");
 }

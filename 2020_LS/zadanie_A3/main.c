@@ -6,6 +6,7 @@ int main(int argc, char *argv[])
 {
 	initializeRootPath(argc, argv);
 	struct Arguments arguments = parseArguments(argc, argv);
+	dumpArguments(&arguments);
 
 	initializeTemperature(&arguments);
 

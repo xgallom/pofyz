@@ -35,6 +35,6 @@ struct Arguments {
 };
 
 struct Arguments parseArguments(int argc, char *argv[]);
-void dumpParameters(const struct Arguments *arguments);
+void dumpArguments(const struct Arguments *arguments);
 
 #endif //POFYZ_2020_LS_ZADANIE_A2_ARGUMENTS_H
