@@ -24,12 +24,15 @@ struct Vector string(size_t length);
 struct Vector stringFrom(const char *buffer);
 struct Vector stringView(const char *buffer);
 
+struct Vector copy(const struct Vector *from);
+
 size_t resize(struct Vector *vector, size_t newLength);
 size_t extend(struct Vector *vector, size_t lengthExtension);
 void clear(struct Vector *vector);
 void delete(struct Vector *vector);
 
 int isNull(const struct Vector *vector);
+size_t sizeOf(const struct Vector *vector);
 const char *vectorType(const struct Vector *vector);
 
 double *asDouble(struct Vector *vector);

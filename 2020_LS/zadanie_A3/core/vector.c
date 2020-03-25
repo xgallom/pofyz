@@ -87,6 +87,18 @@ struct Vector stringView(const char *buffer)
 	};
 }
 
+struct Vector copy(const struct Vector *from)
+{
+	struct Vector result = *from;
+
+	result.data = NULL;
+	allocate(&result);
+
+	memcpy(result.data, from->data, sizeOf(from));
+
+	return result;
+}
+
 size_t resize(struct Vector *vector, size_t newLength)
 {
 	const size_t oldLength = vector->length;
@@ -122,6 +134,7 @@ void delete(struct Vector *vector)
 }
 
 int isNull(const struct Vector *vector) { return vector->data == NULL; }
+size_t sizeOf(const struct Vector *vector) { return vector->entrySize * vector->length; }
 const char *vectorType(const struct Vector *vector) { return vector->type ? vector->type : TypeNull; }
 
 double *asDouble(struct Vector *vector) { return vector->data; }
