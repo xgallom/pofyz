@@ -16,8 +16,6 @@
 #define PARAMETER_C       5
 #define PARAMETER_T       6
 
-// PARAMETER_CONTROL
-#define PARAMETER_INVALID -1
 #define PARAMETER_COUNT   7
 
 #endif //POFYZ_PARAMETERS_H

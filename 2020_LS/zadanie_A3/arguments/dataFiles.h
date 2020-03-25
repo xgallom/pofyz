@@ -1,0 +1,11 @@
+//
+// Created by xgallom on 3/25/20.
+//
+
+#ifndef POFYZ_2020_LS_ZADANIE_A3_DATA_DATAFILES_H
+#define POFYZ_2020_LS_ZADANIE_A3_DATA_DATAFILES_H
+
+#define DATAFILE_temperature 0
+#define DATAFILE_COUNT       1
+
+#endif //POFYZ_2020_LS_ZADANIE_A3_DATA_DATAFILES_H
