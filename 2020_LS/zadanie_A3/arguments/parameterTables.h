@@ -7,8 +7,6 @@
 
 #include "parameters.h"
 
-#include <stddef.h>
-
 #define PARAMETERS_DETAILS_UNIT  0
 #define PARAMETERS_DETAILS_DESC  1
 #define PARAMETERS_DETAILS_COUNT 2

@@ -4,6 +4,8 @@
 
 #include "parameterTables.h"
 
+#include <stddef.h>
+
 const char *ParametersTable[PARAMETER_COUNT] = {
 #define DEF(param) [PARAMETER_##param] = #param
 		// SIMULATION PARAMETERS
@@ -30,6 +32,6 @@ const char *ParametersDetailsTable[PARAMETER_COUNT][PARAMETERS_DETAILS_COUNT] = 
 		DEF(m, "kg", "Mass of falling object"),
 		DEF(S, "m2", "Effective area of falling object"),
 		DEF(C, NULL, "Drag coefficient"),
-		DEF(T, "K", "Temperature of air")
+		DEF(T, "K", "Temperature of air (deprecated, will be replaced soon with temperature data file)")
 #undef DEF
 };
