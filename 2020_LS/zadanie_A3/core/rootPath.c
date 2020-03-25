@@ -15,7 +15,9 @@
 #endif
 
 #if !HAS_STATIC_ROOT_PATH
+
 #include <libgen.h>
+
 #endif
 
 static struct Vector path = NULL_VECTOR;

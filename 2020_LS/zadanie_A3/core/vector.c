@@ -80,10 +80,10 @@ struct Vector stringFrom(const char *buffer)
 struct Vector stringView(const char *buffer)
 {
 	return (struct Vector) {
-		.data = (char *) buffer,
-		.length = strlen(buffer),
-		.entrySize = 0,
-		.type = TypeView,
+			.data = (char *) buffer,
+			.length = strlen(buffer),
+			.entrySize = 0,
+			.type = TypeView,
 	};
 }
 
