@@ -4,6 +4,7 @@ set(files
         main.c
         arguments.c
         constants.c
+        parameterTables.c
 
         core/error.c
         core/exit.c

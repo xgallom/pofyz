@@ -3,6 +3,7 @@
 //
 
 #include "arguments.h"
+#include "parameterTables.h"
 #include "core/error.h"
 #include "core/toStr.h"
 #include "core/exit.h"
@@ -22,34 +23,6 @@
 #define HELP_ARGUMENT "--help"
 #define DASH_CHARACTER '-'
 #define SPLIT_CHARACTER '='
-
-static const char *ParametersTable[PARAMETER_COUNT] = {
-		// SIMULATION PARAMETERS
-		"x_0",
-		"v_0",
-		"dt",
-
-		// OBJECT PARAMETERS
-		"m",
-		"S",
-		"C",
-		"T"
-};
-
-#define PARAMETERS_DETAILS_UNIT  0
-#define PARAMETERS_DETAILS_DESC  1
-#define PARAMETERS_DETAILS_COUNT 2
-
-static const char *ParametersDetailsTable[PARAMETER_COUNT][PARAMETERS_DETAILS_COUNT] = {
-		{"m",   "Initial height of fall (positive upwards)"},
-		{"m/s", "Initial fall velocity  (positive upwards)"},
-		{"s",   "Time step of simulation"},
-
-		{"kg",  "Mass of falling object"},
-		{"m2",  "Effective area of falling object"},
-		{NULL,   "Drag coefficient"},
-		{"K",   "Temperature of air"}
-};
 
 static void printUsage(const char *programName)
 {
