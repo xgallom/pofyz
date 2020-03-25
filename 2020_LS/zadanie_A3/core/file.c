@@ -8,10 +8,18 @@
 
 FILE *file(const char *filePath, const char *flags)
 {
-	struct Vector absoluteFilePath = pathFor(filePath);
-	FILE *result = fopen(asCString(&absoluteFilePath), flags);
+	FILE *result = fopen(filePath, flags);
 
-	fail(result == NULL, "Failed to open file \"%s\"\n", asCString(&absoluteFilePath));
+	fail(result == NULL, "Failed to open file \"%s\"\n", filePath);
+
+	return result;
+}
+
+FILE *rootFile(const char *filePath, const char *flags)
+{
+	struct Vector absoluteFilePath = pathFor(filePath);
+
+	FILE *result = file(asCString(&absoluteFilePath), flags);
 
 	delete(&absoluteFilePath);
 

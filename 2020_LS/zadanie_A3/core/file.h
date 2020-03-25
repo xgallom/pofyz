@@ -8,6 +8,7 @@
 #include <stdio.h>
 
 FILE *file(const char *filePath, const char *flags);
+FILE *rootFile(const char *filePath, const char *flags);
 void close(FILE *file);
 
 size_t lineCount(FILE *file);

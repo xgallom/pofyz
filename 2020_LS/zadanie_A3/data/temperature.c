@@ -22,7 +22,7 @@ struct {
 
 void initializeTemperature(void)
 {
-	FILE *inputFile = file(FILE_PATH, "rt");
+	FILE *inputFile = rootFile(FILE_PATH, "rt");
 	size_t lines = lineCount(inputFile);
 
 	data.x = vectorDouble(lines);
