@@ -14,7 +14,7 @@ struct Vector {
 	size_t  entrySize; // +8B = 24B
 	const char *type;  // +8B = 32B
 
-	// 64B/32B = 0.5 L1 cache-line
+	// 32B/64B = 0.5 L1 cache-line
 };
 
 #define NULL_VECTOR (struct Vector) {.data = NULL, .length = 0, .entrySize = 0, .type = NULL}
