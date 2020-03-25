@@ -5,7 +5,9 @@
 #ifndef POFYZ_2020_LS_ZADANIE_A3_DATA_TEMPERATURE_H
 #define POFYZ_2020_LS_ZADANIE_A3_DATA_TEMPERATURE_H
 
-void initializeTemperature(void);
+struct Arguments;
+
+void initializeTemperature(const struct Arguments *arguments);
 void cleanupTemperature(void);
 
 double temperatureFor(double x);

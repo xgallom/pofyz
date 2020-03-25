@@ -7,7 +7,9 @@
 #include "../core/vector.h"
 #include "../core/error.h"
 #include "../core/parse.h"
+#include "../core/rootPath.h"
 #include "../core/toStr.h"
+#include "../arguments/arguments.h"
 #include "../equations/general.h"
 
 #define FILE_PATH "/data/temperature.txt"
@@ -17,12 +19,18 @@
 #define ENTRY_COUNT 2
 
 struct {
-	struct Vector x, T;
+	struct Vector x, T, fileName;
 } static data;
 
-void initializeTemperature(void)
+void initializeTemperature(const struct Arguments *arguments)
 {
-	FILE *inputFile = rootFile(FILE_PATH, "rt");
+	if(isNull(&arguments->dataFile.temperature))
+		data.fileName = pathFor(FILE_PATH);
+	else
+		data.fileName = copy(&arguments->dataFile.temperature);
+
+	FILE *inputFile = file(asCString(&data.fileName), "rt");
+
 	size_t lines = lineCount(inputFile);
 
 	data.x = vectorDouble(lines);
@@ -65,6 +73,7 @@ void cleanupTemperature(void)
 {
 	delete(&data.x);
 	delete(&data.T);
+	delete(&data.fileName);
 }
 
 double temperatureFor(double x)
@@ -79,7 +88,7 @@ void dumpTemperature(void)
 			*x = asCDouble(&data.x),
 			*T = asCDouble(&data.T);
 
-	printf("Data from file \"" FILE_PATH "\" in format [x, T]:\n");
+	printf("Data from file \"%s\" in format [x, T]:\n", asCString(&data.fileName));
 	for(int i = 0; i < data.x.length; ++i)
 		printf("   [%8.2f m, %5.2f K]\n", *x++, *T++);
 	printf("\n");
