@@ -15,7 +15,7 @@
 
 struct Arguments;
 
-typedef void (ArgumentParser) (void *result, const char *argument);
+typedef void (ArgumentParser)(void *result, const char *argument);
 
 struct ArgumentTable {
 	const char **keysTable;

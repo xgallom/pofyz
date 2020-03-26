@@ -90,6 +90,6 @@ void dumpTemperature(void)
 
 	printf("Data from file \"%s\" in format [x, T]:\n", asCString(&data.fileName));
 	for(int i = 0; i < data.x.length; ++i)
-		printf("   [%8.2f m, %5.2f K]\n", *x++, *T++);
+		printf("   [%10.2f m, %10.2f K]\n", *x++, *T++);
 	printf("\n");
 }

@@ -4,10 +4,10 @@
 
 int main(int argc, char *argv[])
 {
-	initializeRootPath(argc, argv);
 	struct Arguments arguments = parseArguments(argc, argv);
 	dumpArguments(&arguments);
 
+	initializeRootPath(argc, argv);
 	initializeTemperature(&arguments);
 
 	dumpTemperature();

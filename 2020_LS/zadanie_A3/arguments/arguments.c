@@ -24,12 +24,11 @@
 static void printUsage(const char *programName)
 {
 	printf(
-			"Usage:\n"
-			"  %s [--{parameter}={value} ...] [--{data_file}={value} ...]\n",
+			"Usage: %s [--{parameter}={value} ...] [--{data_file}={path} ...] [" HELP_ARGUMENT "]\n",
 			programName
 	);
 
-	printf("  executes program with custom parameters:\n");
+	printf("    executes program with custom parameters:\n");
 	char unitRepresentation[6] = {};
 	for(int i = 0; i < PARAMETER_COUNT; ++i) {
 		const char *unit = ParametersDetailsTable[i][PARAMETERS_DETAILS_UNIT];
@@ -42,7 +41,7 @@ static void printUsage(const char *programName)
 		);
 	}
 
-	printf("\n  executes program with custom data files:\n");
+	printf("\n    executes program with custom data files:\n");
 	for(int i = 0; i < DATAFILE_COUNT; ++i)
 		printf(
 				"    %16s - %s\n",
@@ -50,11 +49,11 @@ static void printUsage(const char *programName)
 				DataFilesDetailsTable[i][DATAFILES_DETAILS_DESC]
 		);
 
-	printf("\n"
-		   "  %s " HELP_ARGUMENT "\n"
-		   "    prints this usage\n"
+	printf("\n    executes program with flags:\n"
+		   "    %16s - %s\n"
 		   "\n",
-		   programName
+		   HELP_ARGUMENT,
+		   "Prints this usage"
 	);
 }
 
@@ -178,7 +177,6 @@ void dumpArguments(const struct Arguments *arguments)
 	printf("\nSimulating with dataFiles:\n");
 	for(int i = 0; i < DATAFILE_COUNT; ++i) {
 		const char *dataFile = asCString(arguments->dataFiles + i);
-		const char *formatString = dataFile ?  : "%16s : %s\n";
 
 		if(dataFile)
 			printf(
