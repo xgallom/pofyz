@@ -8,6 +8,7 @@
 #include "vector.h"
 
 #define PROGRAM_NAME_INDEX 0
+#define PROGRAM_NAME "2020_LS_zadanie_A3"
 
 void initializeRootPath(int argc, char *argv[]);
 void cleanupRootPath(void);

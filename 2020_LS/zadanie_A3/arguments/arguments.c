@@ -20,15 +20,49 @@
 #define HELP_ARGUMENT "--help"
 #define DASH_CHARACTER '-'
 #define SPLIT_CHARACTER '='
+#define MAX_WIDTH 80
 
-static void printUsage(const char *programName)
+static void printUsage()
 {
-	printf(
-			"Usage: %s [--{parameter}={value} ...] [--{data_file}={path} ...] [" HELP_ARGUMENT "]\n",
-			programName
-	);
+	char buffer[BUFSIZ];
+	sprintf(buffer, "Usage: " PROGRAM_NAME);
+	printf("%s", buffer);
 
-	printf("    executes program with custom parameters:\n");
+	const size_t offsetStart = strlen(buffer);
+	size_t currentLength = offsetStart;
+
+	for(int i = 0; i < PARAMETER_COUNT; ++i) {
+		sprintf(buffer, " [--%s={double}]", ParametersTable[i]);
+		const size_t length = strlen(buffer);
+
+		if(currentLength + length > MAX_WIDTH) {
+			printf("\n%*c", (int) offsetStart, ' ');
+			currentLength = offsetStart;
+		}
+
+		printf("%s", buffer);
+		currentLength += length;
+	}
+	for(int i = 0; i < DATAFILE_COUNT; ++i) {
+		sprintf(buffer, " [--%s={path}]", DataFilesTable[i]);
+		const size_t length = strlen(buffer);
+
+		if(currentLength + length > MAX_WIDTH) {
+			printf("\n%*c", (int) offsetStart, ' ');
+			currentLength = offsetStart;
+		}
+
+		printf("%s", buffer);
+		currentLength += length;
+	}
+
+	sprintf(buffer, " [" HELP_ARGUMENT "]");
+	const size_t length = strlen(buffer);
+	if(currentLength + length > MAX_WIDTH)
+		printf("\n%*c", (int) offsetStart, ' ');
+	printf("%s\n\n", buffer);
+
+	printf("    Executes program with custom parameters:\n");
 	char unitRepresentation[6] = {};
 	for(int i = 0; i < PARAMETER_COUNT; ++i) {
 		const char *unit = ParametersDetailsTable[i][PARAMETERS_DETAILS_UNIT];
@@ -41,7 +75,7 @@ static void printUsage(const char *programName)
 		);
 	}
 
-	printf("\n    executes program with custom data files:\n");
+	printf("\n    Executes program with custom data files:\n");
 	for(int i = 0; i < DATAFILE_COUNT; ++i)
 		printf(
 				"    %16s - %s\n",
@@ -49,7 +83,7 @@ static void printUsage(const char *programName)
 				DataFilesDetailsTable[i][DATAFILES_DETAILS_DESC]
 		);
 
-	printf("\n    executes program with flags:\n"
+	printf("\n    Executes program with flags:\n"
 		   "    %16s - %s\n"
 		   "\n",
 		   HELP_ARGUMENT,
@@ -57,11 +91,11 @@ static void printUsage(const char *programName)
 	);
 }
 
-static inline void invalidArgument(int check, int index, const char *argument, const char *programName)
+static inline void invalidArgument(int check, int index, const char *argument)
 {
 	if(check) {
 		error("Invalid argument %d: Error in \"%s\"\n\n", index, argument);
-		printUsage(programName);
+		printUsage();
 		exitFailure();
 	}
 }
@@ -80,8 +114,7 @@ static void parseArgumentKeyValue(
 		struct Arguments *arguments,
 		int index,
 		const char *key,
-		const char *value,
-		const char *programName)
+		const char *value)
 {
 	for(int tableIndex = 0; tableIndex < ARGUMENTS_TABLE_COUNT; ++tableIndex) {
 		const struct ArgumentTable *const argumentTable = ArgumentsTable + tableIndex;
@@ -94,33 +127,30 @@ static void parseArgumentKeyValue(
 		}
 	}
 
-	invalidArgument(1, index, key, programName);
+	invalidArgument(1, index, key);
 }
 
 static void parseArgument(
 		struct Arguments *arguments,
 		int index,
 		char *argument,
-		const char *argumentEnd,
-		const char *programName)
+		const char *argumentEnd)
 {
 	char *keyEnd = argument;
 
 	while(*++keyEnd != SPLIT_CHARACTER)
-		invalidArgument(keyEnd >= argumentEnd, index, argument, programName);
+		invalidArgument(keyEnd >= argumentEnd, index, argument);
 
 	const char *const valueStart = keyEnd + 1;
 
-	invalidArgument(valueStart >= argumentEnd, index, argument, programName);
+	invalidArgument(valueStart >= argumentEnd, index, argument);
 
 	*keyEnd = '\0';
-	parseArgumentKeyValue(arguments, index, argument, valueStart, programName);
+	parseArgumentKeyValue(arguments, index, argument, valueStart);
 }
 
 struct Arguments parseArguments(int argc, char *argv[])
 {
-	const char *const programName = argv[PROGRAM_NAME_INDEX];
-
 	struct Arguments arguments = {
 			.parameter = {
 					// SIMULATION PARAMETERS
@@ -144,7 +174,7 @@ struct Arguments parseArguments(int argc, char *argv[])
 		const size_t length = strlen(argument);
 
 		if(strcmp(argument, HELP_ARGUMENT) == 0) {
-			printUsage(programName);
+			printUsage();
 			exitSuccess();
 		}
 
@@ -152,9 +182,9 @@ struct Arguments parseArguments(int argc, char *argv[])
 				length < 3 ||
 				argument[0] != DASH_CHARACTER ||
 				argument[1] != DASH_CHARACTER,
-				i, argument, programName
+				i, argument
 		);
-		parseArgument(&arguments, i, argument + 2, argument + length, programName);
+		parseArgument(&arguments, i, argument + 2, argument + length);
 	}
 
 	return arguments;
