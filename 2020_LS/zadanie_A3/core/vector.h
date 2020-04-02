@@ -9,10 +9,10 @@
 #include <stdint.h>
 
 struct Vector {
-	void *data;        // +8B = 8B
-	size_t length;     // +8B = 16B
+	void *data;       // +8B = 8B
+	size_t length;    // +8B = 16B
 	size_t entrySize; // +8B = 24B
-	const char *type;  // +8B = 32B
+	const char *type; // +8B = 32B
 
 	// 32B/64B = 0.5 L1 cache-line
 };
