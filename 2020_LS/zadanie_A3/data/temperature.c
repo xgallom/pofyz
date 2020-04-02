@@ -4,7 +4,7 @@
 
 #include "temperature.h"
 #include "../core/file.h"
-#include "../core/vector.h"
+#include "../core/matrix.h"
 #include "../core/error.h"
 #include "../core/parse.h"
 #include "../core/rootPath.h"
@@ -19,7 +19,8 @@
 #define ENTRY_COUNT 2
 
 struct {
-	struct Vector x, T, fileName;
+	struct Matrix x, T;
+	struct Vector fileName;
 } static data;
 
 void initializeTemperature(const struct Arguments *arguments)
@@ -33,12 +34,12 @@ void initializeTemperature(const struct Arguments *arguments)
 
 	size_t lines = lineCount(inputFile);
 
-	data.x = vectorDouble(lines);
-	data.T = vectorDouble(lines);
+	data.x = matrixColumnVectorDouble(lines);
+	data.T = matrixColumnVectorDouble(lines);
 
 	double
-			*x = asDouble(&data.x),
-			*T = asDouble(&data.T),
+			*x = asMDouble(&data.x),
+			*T = asMDouble(&data.T),
 			parsedBuffer[ENTRY_COUNT];
 	char buffer[BUFSIZ];
 
@@ -63,33 +64,32 @@ void initializeTemperature(const struct Arguments *arguments)
 		}
 	}
 
-	resize(&data.x, x - asDouble(&data.x));
-	resize(&data.T, T - asDouble(&data.T));
+	matrixResize(&data.x, x - asMDouble(&data.x), KEEP_SIZE);
+	matrixResize(&data.T, T - asMDouble(&data.T), KEEP_SIZE);
 
 	close(inputFile);
 }
 
 void cleanupTemperature(void)
 {
-	delete(&data.x);
-	delete(&data.T);
+	matrixDelete(&data.x);
+	matrixDelete(&data.T);
 	delete(&data.fileName);
 }
 
-double temperatureFor(double x)
-{
-	// TODO: Interpolate
-	return 0.0;
-}
+const struct Matrix *temperaturePositions() { return &data.x; }
+const struct Matrix *temperatureValues() { return &data.T; }
+size_t temperatureCount() { return data.x.length; }
 
 void dumpTemperature(void)
 {
 	const double
-			*x = asCDouble(&data.x),
-			*T = asCDouble(&data.T);
+			*x = asCMDouble(&data.x),
+			*T = asCMDouble(&data.T);
+	const size_t count = temperatureCount();
 
 	printf("Data from file \"%s\" in format [x, T]:\n", asCString(&data.fileName));
-	for(int i = 0; i < data.x.length; ++i)
+	for(int i = 0; i < count; ++i)
 		printf("   [%10.2f m, %10.2f K]\n", *x++, *T++);
 	printf("\n");
 }
