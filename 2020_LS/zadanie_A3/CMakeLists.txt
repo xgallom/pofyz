@@ -12,6 +12,8 @@ set(files
         core/error.c
         core/exit.c
         core/file.c
+        core/matrix.c
+        core/matrixOperations.c
         core/output.c
         core/parse.c
         core/rootPath.c
@@ -22,9 +24,11 @@ set(files
         equations/acceleration.c
         equations/analytical.c
         equations/general.c
+        equations/polynomial.c
         equations/velocity.c
 
         solvers/euler.c
+        solvers/linearLeastSquares.c
         solvers/rungeKutta.c
         solvers/solveGeneric.c
         solvers/statistics.c
