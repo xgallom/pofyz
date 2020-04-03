@@ -16,7 +16,7 @@ void createTransformationMatrix(
 		size_t column,
 		const struct Matrix *x)
 {
-	*value = nthDegreePolynomial(getAt(x, 1, row), column);
+	*value = nthDegreePolynomial(getAt(x, 0, row), column);
 }
 
 struct Matrix solveLinearLeastSquares(const struct Matrix *x, const struct Matrix *y, size_t polynomialSize)
@@ -34,8 +34,6 @@ struct Matrix solveLinearLeastSquares(const struct Matrix *x, const struct Matri
 	dumpMatrix(&transformationMatrix);
 
 	struct Matrix transposedTransformationMatrix = transpose(&transformationMatrix);
-	printf("XT:\n");
-	dumpMatrix(&transposedTransformationMatrix);
 
 	struct Matrix cubicTransformationMatrix = matrixMultiply(&transposedTransformationMatrix, &transformationMatrix);
 	printf("XTX:\n");
