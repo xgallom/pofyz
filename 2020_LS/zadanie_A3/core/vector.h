@@ -20,6 +20,7 @@ struct Vector {
 #define NULL_VECTOR (struct Vector) {.data = NULL, .length = 0, .entrySize = 0, .type = NULL}
 
 struct Vector vectorDouble(size_t length);
+struct Vector vectorDoubleIndex(size_t length);
 struct Vector vectorInt(size_t length);
 struct Vector string(size_t length);
 struct Vector stringFrom(const char *buffer);
@@ -44,5 +45,8 @@ const int *asCInt(const struct Vector *vector);
 
 char *asString(struct Vector *vector);
 const char *asCString(const struct Vector *vector);
+
+void dumpVectorImpl(const struct Vector *vector, const char *name);
+#define dumpVector(vector) dumpVectorImpl(vector, #vector)
 
 #endif //POFYZ_2020_LS_ZADANIE_A2_CORE_VECTOR_H

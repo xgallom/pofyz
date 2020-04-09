@@ -7,11 +7,13 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 static const char
 		*TypeChar = "char",
 		*TypeView = "view_char",
 		*TypeDouble = "double",
+		*TypeDoubleIndex = "double*",
 		*TypeInt = "int",
 		*TypeNull = "NULL";
 
@@ -47,6 +49,20 @@ struct Vector vectorDouble(size_t length)
 			.length = length,
 			.entrySize = sizeof(double),
 			.type = TypeDouble,
+	};
+
+	allocate(&result);
+
+	return result;
+}
+
+struct Vector vectorDoubleIndex(size_t length)
+{
+	struct Vector result = {
+			.data = NULL,
+			.length = length,
+			.entrySize = sizeof(double *),
+			.type = TypeDoubleIndex,
 	};
 
 	allocate(&result);
@@ -119,19 +135,19 @@ size_t resize(struct Vector *vector, size_t newLength)
 	const size_t oldLength = vector->length;
 	vector->length = newLength;
 
-	reallocate(vector);
+	if(newLength != oldLength) {
+		if(!oldLength)
+			allocate(vector);
+		else
+			reallocate(vector);
+	}
 
 	return oldLength;
 }
 
 size_t extend(struct Vector *vector, size_t lengthExtension)
 {
-	const size_t oldLength = vector->length;
-	vector->length += lengthExtension;
-
-	reallocate(vector);
-
-	return oldLength;
+	return resize(vector, vector->length + lengthExtension);
 }
 
 void clear(struct Vector *vector)
@@ -161,3 +177,21 @@ const int *asCInt(const struct Vector *vector) { return vector->data; }
 char *asString(struct Vector *vector) { return vector->data; }
 const char *asCString(const struct Vector *vector) { return vector->data; }
 
+void dumpVectorImpl(const struct Vector *vector, const char *name)
+{
+	printf(
+			"Vector \"%s\" of %s[%zu]:\n"
+			"    ",
+			name,
+			vectorType(vector),
+			vector->length
+	);
+
+	if(vector->type == TypeInt) {
+		const int *value = asCInt(vector);
+		for(size_t index = 0; index < vector->length; ++index)
+			printf("%d ", *value++);
+	}
+
+	printf("\n\n");
+}

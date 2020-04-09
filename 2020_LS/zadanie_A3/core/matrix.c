@@ -19,6 +19,22 @@ struct Matrix matrixDouble(size_t rows, size_t columns)
 	return result;
 }
 
+struct Matrix matrixDoubleIndex(struct Matrix *into)
+{
+	struct Matrix result = {
+			.rows = into->rows,
+			.columns = into->columns,
+	};
+
+	*((struct Vector *) &result) = vectorDoubleIndex(into->rows);
+
+	double **index = asMDoubleIndex(&result);
+	for(size_t row = 0; row < into->rows; ++row)
+		*index++ = asRow(into, row);
+
+	return result;
+}
+
 struct Matrix matrixRowVectorDouble(size_t columns) { return matrixDouble(1, columns); }
 struct Matrix matrixColumnVectorDouble(size_t rows) { return matrixDouble(rows, 1); }
 
@@ -83,6 +99,9 @@ const double *asCRow(const struct Matrix *matrix, size_t row) { return asCMDoubl
 double getAt(const struct Matrix *matrix, size_t row, size_t column) { return *cAt(matrix, row, column); }
 double *at(struct Matrix *matrix, size_t row, size_t column) { return asRow(matrix, row) + column; }
 const double *cAt(const struct Matrix *matrix, size_t row, size_t column) { return asCRow(matrix, row) + column; }
+
+double **asMDoubleIndex(struct Matrix *matrix) { return matrix->data; }
+const double **asCMDoubleIndex(struct Matrix *matrix) { return matrix->data; }
 
 void dumpMatrixImpl(const struct Matrix *matrix, const char *name)
 {

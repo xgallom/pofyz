@@ -31,6 +31,7 @@ typedef void (ConstMatrixIterator)(const struct Matrix *matrix,
 );
 
 struct Matrix matrixDouble(size_t rows, size_t columns);
+struct Matrix matrixDoubleIndex(struct Matrix *into);
 struct Matrix matrixRowVectorDouble(size_t columns);
 struct Matrix matrixColumnVectorDouble(size_t rows);
 
@@ -56,6 +57,9 @@ const double *asCRow(const struct Matrix *matrix, size_t row);
 double getAt(const struct Matrix *matrix, size_t row, size_t column);
 double *at(struct Matrix *matrix, size_t row, size_t column);
 const double *cAt(const struct Matrix *matrix, size_t row, size_t column);
+
+double **asMDoubleIndex(struct Matrix *matrix);
+const double **asCMDoubleIndex(struct Matrix *matrix);
 
 void dumpMatrixImpl(const struct Matrix *matrix, const char *name);
 #define dumpMatrix(matrix) dumpMatrixImpl(matrix, #matrix)
