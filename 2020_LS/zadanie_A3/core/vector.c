@@ -57,7 +57,7 @@ struct Vector string(size_t length)
 {
 	struct Vector result = {
 			.data = NULL,
-			.length = length,
+			.length = length + 1,
 			.entrySize = sizeof(char),
 			.type = TypeChar,
 	};
@@ -81,7 +81,7 @@ struct Vector stringView(const char *buffer)
 {
 	return (struct Vector) {
 			.data = (char *) buffer,
-			.length = strlen(buffer),
+			.length = strlen(buffer) + 1,
 			.entrySize = 0,
 			.type = TypeView,
 	};

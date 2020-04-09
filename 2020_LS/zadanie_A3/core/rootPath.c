@@ -54,11 +54,14 @@ const char *rootPath(void)
 
 struct Vector pathFor(const char *relativePath)
 {
-	const size_t length = strlen(relativePath);
+	const size_t
+			length = strlen(relativePath),
+			pathLength = strlen(asCString(&path));
 
-	struct Vector result = string(path.length + length);
-	strncpy(asString(&result), asCString(&path), path.length);
-	strncpy(asString(&result) + path.length, relativePath, length);
+	struct Vector result = string(pathLength + length);
+
+	strcpy(asString(&result), asCString(&path));
+	strcpy(asString(&result) + pathLength, relativePath);
 
 	return result;
 }
