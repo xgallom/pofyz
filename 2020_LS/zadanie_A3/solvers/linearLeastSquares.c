@@ -48,17 +48,18 @@ struct Matrix solveLinearLeastSquares(const struct Matrix *x, const struct Matri
 	matrixDelete(&transposedTransformationMatrix);
 
 	// Solve linear equation system
-	struct Vector pivotVector = vectorInt(polynomialSize);
-	struct Matrix coefficients = solveLinearEquationSystem(
-			&cubicTransformationMatrix,
-			&transformedValues,
-			&pivotVector
-	);
+	struct Matrix solution = solveLinearEquationSystem(&cubicTransformationMatrix, &transformedValues);
+
+	// Reverse coefficients so they go from constant upwards
+	struct Matrix coefficients = matrixVectorReverse(&solution);
+
+	printf("beta:\n");
+	dumpMatrix(&coefficients);
 
 	// Clean up
 	matrixDelete(&cubicTransformationMatrix);
 	matrixDelete(&transformedValues);
-	delete(&pivotVector);
+	matrixDelete(&solution);
 
 	return coefficients;
 }
