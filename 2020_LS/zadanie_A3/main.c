@@ -24,23 +24,9 @@ int main(int argc, char *argv[])
 	struct Matrix coefficients = solveLinearLeastSquares(temperaturePositions(), temperatureValues(), 5);
 
 	SEPARATOR
-	printf("\nKoeficienty este nie su vyratane, preto som ich naplnil postupne klesajucimi hodnotami:\n\n");
-	double *coefficient = asMDouble(&coefficients);
-	for(size_t i = 0; i < coefficients.length; ++i)
-		*coefficient++ = ((double) coefficients.length - i) / coefficients.length;
-	dumpMatrix(&coefficients);
-
-	SEPARATOR
-	printf("\nOverenie fungovania funkcie computePolynomial s nedoratanymi koeficientami pre teplotu (Tfun):\n\n");
-	for(double x = 0.0; x < 10.0; x += 0.5) {
-		printf("T(%4.1lf) = ", x);
-
-		coefficient = asMDouble(&coefficients);
-		for(size_t n = 0; n < coefficients.length; ++n)
-			printf("%s %g %3.1f^%d ", n ? "+" : "", *coefficient++, x, n);
-
-		printf("\n        = %f\n\n", computePolynomial(x, &coefficients));
-	}
+	printf("\nOverenie fungovania funkcie computePolynomial s koeficientami pre teplotu (Tfun):\n\n");
+	for(double x = 0.0; x <= 80e3; x += 2500.0)
+		printf("T(%4.1f km) = %f K\n", x / 1000.0, computePolynomial(x, &coefficients));
 
 	cleanupTemperature();
 	cleanupRootPath();

@@ -28,7 +28,11 @@ set(files
         equations/velocity.c
 
         solvers/euler.c
+        solvers/linearEquationSystem.c
         solvers/linearLeastSquares.c
+        solvers/linearLupDecompose.c
+        solvers/linearLupNormalize.c
+        solvers/linearLupSolve.c
         solvers/rungeKutta.c
         solvers/solveGeneric.c
         solvers/statistics.c
