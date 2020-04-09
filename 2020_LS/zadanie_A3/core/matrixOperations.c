@@ -4,6 +4,7 @@
 
 #include "matrixOperations.h"
 #include "error.h"
+#include "swap.h"
 
 struct Matrix transpose(const struct Matrix *matrix)
 {
@@ -55,4 +56,41 @@ struct Matrix matrixMultiply(const struct Matrix *left, const struct Matrix *rig
 	iterate(&result, matrixMultiplyIterator, &iteratorData);
 
 	return result;
+}
+
+void matrixVectorReverseIterator(
+		struct Matrix *matrix,
+		double *value,
+		size_t row,
+		size_t column,
+		const struct Matrix *vector)
+{
+	*value = asCMDouble(vector)[vector->length - row - column - 1];
+}
+
+struct Matrix matrixVectorReverse(const struct Matrix *vector)
+{
+	struct Matrix result = matrixDouble(vector->rows, vector->columns);
+
+	iterate(&result, matrixVectorReverseIterator, vector);
+
+	return result;
+}
+
+void matrixPivotSwap(double **index, int *pivot, size_t rowA, size_t rowB, size_t length)
+{
+	swap(int, pivot[rowA], pivot[rowB])
+	swap(double *, index[rowA], index[rowB])
+
+	// For determinant
+	++pivot[length];
+}
+
+void vectorPivotSwap(double *vector, int *pivot, size_t indexA, size_t indexB, size_t length)
+{
+	swap(int, pivot[indexA], pivot[indexB])
+	swap(double, vector[indexA], vector[indexB])
+
+	// For determinant
+	++pivot[length];
 }
