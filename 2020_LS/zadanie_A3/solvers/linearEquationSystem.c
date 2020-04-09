@@ -22,7 +22,7 @@ static struct Vector preparePivots(size_t length)
 
 struct Matrix solveLinearEquationSystem(struct Matrix *transformationMatrix, struct Matrix *values)
 {
-	fail(values->columns != 1, "LES: Input must be row vectors: %zu\n", values->columns);
+	fail(values->columns != 1, "LES: Input must be row vector: %zu\n", values->columns);
 	fail(
 			transformationMatrix->rows != transformationMatrix->columns,
 			"LES: Input must be square matrix: %zu and %zu\n", transformationMatrix->rows, transformationMatrix->columns
