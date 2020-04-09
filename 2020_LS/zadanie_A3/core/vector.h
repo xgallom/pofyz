@@ -20,6 +20,7 @@ struct Vector {
 #define NULL_VECTOR (struct Vector) {.data = NULL, .length = 0, .entrySize = 0, .type = NULL}
 
 struct Vector vectorDouble(size_t length);
+struct Vector vectorInt(size_t length);
 struct Vector string(size_t length);
 struct Vector stringFrom(const char *buffer);
 struct Vector stringView(const char *buffer);
@@ -37,6 +38,9 @@ const char *vectorType(const struct Vector *vector);
 
 double *asDouble(struct Vector *vector);
 const double *asCDouble(const struct Vector *vector);
+
+int *asInt(struct Vector *vector);
+const int *asCInt(const struct Vector *vector);
 
 char *asString(struct Vector *vector);
 const char *asCString(const struct Vector *vector);

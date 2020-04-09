@@ -12,6 +12,7 @@ static const char
 		*TypeChar = "char",
 		*TypeView = "view_char",
 		*TypeDouble = "double",
+		*TypeInt = "int",
 		*TypeNull = "NULL";
 
 static void allocate(struct Vector *vector)
@@ -46,6 +47,20 @@ struct Vector vectorDouble(size_t length)
 			.length = length,
 			.entrySize = sizeof(double),
 			.type = TypeDouble,
+	};
+
+	allocate(&result);
+
+	return result;
+}
+
+struct Vector vectorInt(size_t length)
+{
+	struct Vector result = {
+			.data = NULL,
+			.length = length,
+			.entrySize = sizeof(int),
+			.type = TypeInt,
 	};
 
 	allocate(&result);
@@ -139,6 +154,9 @@ const char *vectorType(const struct Vector *vector) { return vector->type ? vect
 
 double *asDouble(struct Vector *vector) { return vector->data; }
 const double *asCDouble(const struct Vector *vector) { return vector->data; }
+
+int *asInt(struct Vector *vector) { return vector->data; }
+const int *asCInt(const struct Vector *vector) { return vector->data; }
 
 char *asString(struct Vector *vector) { return vector->data; }
 const char *asCString(const struct Vector *vector) { return vector->data; }
