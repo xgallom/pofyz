@@ -3,13 +3,14 @@
 //
 
 #include "linearLeastSquares.h"
+#include "linearEquationSystem.h"
 #include "../core/error.h"
 #include "../core/matrixOperations.h"
 #include "../equations/polynomial.h"
 
 #include <stdio.h>
 
-void createTransformationMatrix(
+static void createTransformationMatrix(
 		struct Matrix *matrix,
 		double *value,
 		size_t row,
@@ -26,8 +27,7 @@ struct Matrix solveLinearLeastSquares(const struct Matrix *x, const struct Matri
 
 	const size_t dataSize = x->rows;
 
-	struct Matrix coefficients = matrixColumnVectorDouble(polynomialSize);
-
+	// Prepare linear equation system
 	struct Matrix transformationMatrix = matrixDouble(dataSize, polynomialSize);
 	iterate(&transformationMatrix, createTransformationMatrix, x);
 	printf("X:\n");
@@ -39,16 +39,26 @@ struct Matrix solveLinearLeastSquares(const struct Matrix *x, const struct Matri
 	printf("XTX:\n");
 	dumpMatrix(&cubicTransformationMatrix);
 
-	matrixDelete(&transformationMatrix);
-
 	struct Matrix transformedValues = matrixMultiply(&transposedTransformationMatrix, y);
 	printf("XTy:\n");
 	dumpMatrix(&transformedValues);
 
+	// Clean up
+	matrixDelete(&transformationMatrix);
 	matrixDelete(&transposedTransformationMatrix);
 
+	// Solve linear equation system
+	struct Vector pivotVector = vectorInt(polynomialSize);
+	struct Matrix coefficients = solveLinearEquationSystem(
+			&cubicTransformationMatrix,
+			&transformedValues,
+			&pivotVector
+	);
+
+	// Clean up
 	matrixDelete(&cubicTransformationMatrix);
 	matrixDelete(&transformedValues);
+	delete(&pivotVector);
 
 	return coefficients;
 }
