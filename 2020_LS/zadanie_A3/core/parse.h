@@ -7,6 +7,9 @@
 
 #include <stddef.h>
 
+int parseInt(const char *string);
+size_t parseInts(const char *string, int *buffer, size_t count);
+
 double parseDouble(const char *string);
 size_t parseDoubles(const char *string, double *buffer, size_t count);
 
