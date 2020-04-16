@@ -5,6 +5,7 @@
 #include "argumentsTable.h"
 #include "arguments.h"
 #include "parameterTables.h"
+#include "optionTables.h"
 #include "dataFileTables.h"
 #include "../core/parse.h"
 #include "../core/vector.h"
@@ -12,6 +13,11 @@
 static void parseParameter(double *result, const char *argument)
 {
 	*result = parseDouble(argument);
+}
+
+static void parseOption(int *result, const char *argument)
+{
+	*result = parseInt(argument);
 }
 
 static void parseDataFile(struct Vector *result, const char *argument)
@@ -29,6 +35,13 @@ const struct ArgumentTable ArgumentsTable[ARGUMENTS_TABLE_COUNT] = {
 				.parser = (ArgumentParser *) &parseParameter,
 				.argumentEntryOffset = offsetof(struct Arguments, parameters),
 				.argumentEntrySize = sizeof(double)
+		},
+		[ARGUMENTS_TABLE_OPTIONS] = {
+				.keysTable = OptionsTable,
+				.keysCount = OPTION_COUNT,
+				.parser = (ArgumentParser *) &parseOption,
+				.argumentEntryOffset = offsetof(struct Arguments, options),
+				.argumentEntrySize = sizeof(int)
 		},
 		[ARGUMENTS_TABLE_DATAFILES] = {
 				.keysTable = DataFilesTable,

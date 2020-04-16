@@ -8,10 +8,11 @@
 #include <stddef.h>
 
 #define ARGUMENTS_TABLE_PARAMETERS 0
-#define ARGUMENTS_TABLE_DATAFILES  1
+#define ARGUMENTS_TABLE_OPTIONS    1
+#define ARGUMENTS_TABLE_DATAFILES  2
 
 #define ARGUMENT_INVALID -1
-#define ARGUMENTS_TABLE_COUNT      2
+#define ARGUMENTS_TABLE_COUNT      3
 
 struct Arguments;
 
