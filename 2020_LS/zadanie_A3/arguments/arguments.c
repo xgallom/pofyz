@@ -4,12 +4,11 @@
 
 #include "arguments.h"
 #include "parameterTables.h"
+#include "optionTables.h"
 #include "dataFileTables.h"
 #include "argumentsTable.h"
 #include "../core/error.h"
-#include "../core/toStr.h"
 #include "../core/exit.h"
-#include "../core/parse.h"
 #include "../core/rootPath.h"
 
 #include <stdio.h>
@@ -43,6 +42,18 @@ static void printUsage()
 		printf("%s", buffer);
 		currentLength += length;
 	}
+	for(int i = 0; i < OPTION_COUNT; ++i) {
+		sprintf(buffer, " [--%s={int}]", OptionsTable[i]);
+		const size_t length = strlen(buffer);
+
+		if(currentLength + length > MAX_WIDTH) {
+			printf("\n%*c", (int) offsetStart, ' ');
+			currentLength = offsetStart;
+		}
+
+		printf("%s", buffer);
+		currentLength += length;
+	}
 	for(int i = 0; i < DATAFILE_COUNT; ++i) {
 		sprintf(buffer, " [--%s={path}]", DataFilesTable[i]);
 		const size_t length = strlen(buffer);
@@ -62,7 +73,7 @@ static void printUsage()
 		printf("\n%*c", (int) offsetStart, ' ');
 	printf("%s\n\n", buffer);
 
-	printf("    Executes program with custom parameters:\n");
+	printf("  Executes program with custom parameters:\n");
 	char unitRepresentation[6] = {};
 	for(int i = 0; i < PARAMETER_COUNT; ++i) {
 		const char *unit = ParametersDetailsTable[i][PARAMETERS_DETAILS_UNIT];
@@ -75,7 +86,15 @@ static void printUsage()
 		);
 	}
 
-	printf("\n    Executes program with custom data files:\n");
+	printf("\n  Executes program with custom options:\n");
+	for(int i = 0; i < OPTION_COUNT; ++i)
+		printf(
+				"    %16s - %s\n",
+				OptionsTable[i],
+				OptionsDetailsTable[i][DATAFILES_DETAILS_DESC]
+		);
+
+	printf("\n  Executes program with custom data files:\n");
 	for(int i = 0; i < DATAFILE_COUNT; ++i)
 		printf(
 				"    %16s - %s\n",
@@ -83,7 +102,7 @@ static void printUsage()
 				DataFilesDetailsTable[i][DATAFILES_DETAILS_DESC]
 		);
 
-	printf("\n    Executes program with flags:\n"
+	printf("\n  Executes program with flags:\n"
 		   "    %16s - %s\n"
 		   "\n",
 		   HELP_ARGUMENT,
@@ -162,7 +181,10 @@ struct Arguments parseArguments(int argc, char *argv[])
 					.m = 80.0,
 					.S = 0.2,
 					.C = 0.8,
-					.T = 293.15
+					.T = 293.15,
+			},
+			.option = {
+					.polynomialDegree = 5,
 			},
 			.dataFile = {
 					.temperature = NULL_VECTOR,
@@ -197,10 +219,19 @@ void dumpArguments(const struct Arguments *arguments)
 		const char *unit = ParametersDetailsTable[i][PARAMETERS_DETAILS_UNIT];
 
 		printf(
-				"%16s = %8.2f %s\n",
+				"    %16s = %8.2f %s\n",
 				ParametersTable[i],
 				arguments->parameters[i],
 				unit ? unit : ""
+		);
+	}
+
+	printf("\nSimulating with options:\n");
+	for(int i = 0; i < OPTION_COUNT; ++i) {
+		printf(
+				"    %16s : %d\n",
+				OptionsTable[i],
+				arguments->options[i]
 		);
 	}
 
@@ -210,12 +241,12 @@ void dumpArguments(const struct Arguments *arguments)
 
 		if(dataFile)
 			printf(
-					"%16s : \"%s\"\n",
+					"    %16s : \"%s\"\n",
 					DataFilesTable[i],
 					dataFile
 			);
 		else
-			printf("%16s : <default>\n", DataFilesTable[i]);
+			printf("    %16s : <default>\n", DataFilesTable[i]);
 	}
 
 	printf("\n");

@@ -6,6 +6,7 @@
 #define POFYZ_2020_LS_ZADANIE_A2_ARGUMENTS_H
 
 #include "parameters.h"
+#include "options.h"
 #include "dataFiles.h"
 #include "../core/vector.h"
 
@@ -23,6 +24,14 @@ struct Arguments {
 					C,
 					T;
 		} parameter;
+	};
+
+	union {
+		int options[OPTION_COUNT];
+		struct {
+			int
+					polynomialDegree;
+		} option;
 	};
 
 	union {
