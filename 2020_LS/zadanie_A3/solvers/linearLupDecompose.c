@@ -32,10 +32,21 @@ static size_t findMaximumPivotRow(size_t diagonal, double **index, size_t length
 
 void solveLinearLupDecompose(struct Matrix *matrixIndex, struct Vector *pivots)
 {
-	const size_t length = matrixIndex->rows;
-	double **index = asMDoubleIndex(matrixIndex);
-	int *pivot = asInt(pivots);
+	fail(
+			matrixIndex->rows != matrixIndex->columns,
+			"LUPD: Input must be square matrix: %zu and %zu\n", matrixIndex->rows, matrixIndex->columns
+	);
+	fail(
+			matrixIndex->rows != pivots->length + 1,
+			"LUPD: Pivots should contain one more entry than matrix: %zu and %zu\n",
+			matrixIndex->rows, pivots->length + 1
+	);
 
+	solveLinearLupDecomposeUnsafe(asMDoubleIndex(matrixIndex), asInt(pivots), matrixIndex->rows);
+}
+
+void solveLinearLupDecomposeUnsafe(double **index, int *pivot, size_t length)
+{
 	for(size_t diagonal = 0; diagonal < length; ++diagonal) {
 		size_t pivotRow = findMaximumPivotRow(diagonal, index, length);
 

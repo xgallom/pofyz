@@ -19,9 +19,11 @@ double nthDegreePolynomial(double x, size_t n)
 // Avoid power call recomputation by reusing last power
 double computePolynomial(double x, const struct Matrix *coefficients)
 {
-	size_t count = coefficients->length;
-	const double *coefficient = asCMDouble(coefficients);
+	return computePolynomialUnsafe(x, asCMDouble(coefficients), coefficients->length);
+}
 
+double computePolynomialUnsafe(double x, const double *coefficient, size_t count)
+{
 	double power = 1.0, result = 0.0;
 	while(count--) {
 		result += *coefficient++ * power;

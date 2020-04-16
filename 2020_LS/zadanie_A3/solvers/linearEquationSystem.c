@@ -35,15 +35,20 @@ struct Matrix solveLinearEquationSystem(struct Matrix *transformationMatrix, str
 	const size_t length = transformationMatrix->rows;
 
 	struct Matrix transformationMatrixIndex = matrixDoubleIndex(transformationMatrix);
-	struct Matrix result = matrixColumnVectorDouble(length);
+	struct Matrix results = matrixColumnVectorDouble(length);
 	struct Vector pivots = preparePivots(length);
 
-	solveLinearLupDecompose(&transformationMatrixIndex, &pivots);
-	solveLinearLupSolve(&transformationMatrixIndex, &result, values, &pivots);
-	solveLinearLupNormalize(&result, &pivots);
+	double **const index = asMDoubleIndex(&transformationMatrixIndex);
+	double *const result = asMDouble(&results);
+	double *const value = asMDouble(values);
+	int *const pivot = asInt(&pivots);
+
+	solveLinearLupDecomposeUnsafe(index, pivot, length);
+	solveLinearLupSolveUnsafe(index, result, value, pivot, length);
+	solveLinearLupNormalizeUnsafe(result, pivot, length);
 
 	matrixDelete(&transformationMatrixIndex);
 	delete(&pivots);
 
-	return result;
+	return results;
 }

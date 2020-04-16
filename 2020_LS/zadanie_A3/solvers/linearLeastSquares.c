@@ -8,8 +8,6 @@
 #include "../core/matrixOperations.h"
 #include "../equations/polynomial.h"
 
-#include <stdio.h>
-
 static void createTransformationMatrix(
 		struct Matrix *matrix,
 		double *value,
@@ -30,18 +28,12 @@ struct Matrix solveLinearLeastSquares(const struct Matrix *x, const struct Matri
 	// Prepare linear equation system
 	struct Matrix transformationMatrix = matrixDouble(dataSize, polynomialSize);
 	iterate(&transformationMatrix, createTransformationMatrix, x);
-	printf("X:\n");
-	dumpMatrix(&transformationMatrix);
 
 	struct Matrix transposedTransformationMatrix = transpose(&transformationMatrix);
 
 	struct Matrix cubicTransformationMatrix = matrixMultiply(&transposedTransformationMatrix, &transformationMatrix);
-	printf("XTX:\n");
-	dumpMatrix(&cubicTransformationMatrix);
 
 	struct Matrix transformedValues = matrixMultiply(&transposedTransformationMatrix, y);
-	printf("XTy:\n");
-	dumpMatrix(&transformedValues);
 
 	// Clean up
 	matrixDelete(&transformationMatrix);
@@ -52,9 +44,6 @@ struct Matrix solveLinearLeastSquares(const struct Matrix *x, const struct Matri
 
 	// Reverse coefficients so they go from constant upwards
 	struct Matrix coefficients = matrixVectorReverse(&solution);
-
-	printf("beta:\n");
-	dumpMatrix(&coefficients);
 
 	// Clean up
 	matrixDelete(&cubicTransformationMatrix);

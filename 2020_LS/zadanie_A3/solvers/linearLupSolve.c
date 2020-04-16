@@ -4,6 +4,7 @@
 
 #include "linearLupSolve.h"
 #include "../core/matrix.h"
+#include "../core/error.h"
 
 void solveLinearLupSolve(
 		struct Matrix *matrixIndex,
@@ -11,12 +12,38 @@ void solveLinearLupSolve(
 		struct Matrix *values,
 		struct Vector *pivots)
 {
-	const size_t length = matrixIndex->rows;
-	double **index = asMDoubleIndex(matrixIndex);
-	double *result = asMDouble(results);
-	double *value = asMDouble(values);
-	int *pivot = asInt(pivots);
+	fail(
+			matrixIndex->rows != matrixIndex->columns,
+			"LUPS: Input must be square matrix: %zu and %zu\n", matrixIndex->rows, matrixIndex->columns
+	);
+	fail(
+			results->rows != values->rows,
+			"LUPS: Input vector size mismatch: %zu and %zu\n", results->rows, values->rows
+	);
+	fail(
+			matrixIndex->rows != values->rows,
+			"LUPS: Input matrix size mismatch: %zu and %zu\n", matrixIndex->rows, values->rows
+	);
+	fail(results->columns != 1 || values->columns != 1,
+		 "LUPS: Input must be row vectors: %zu and %zu\n", results->columns, values->columns
+	);
+	fail(
+			matrixIndex->rows != pivots->length + 1,
+			"LUPS: Pivots should contain one more entry than matrix: %zu and %zu\n",
+			matrixIndex->rows, pivots->length + 1
+	);
 
+	solveLinearLupSolveUnsafe(
+			asMDoubleIndex(matrixIndex),
+			asMDouble(results),
+			asMDouble(values),
+			asInt(pivots),
+			matrixIndex->rows
+	);
+}
+
+void solveLinearLupSolveUnsafe(double **index, double *result, double *value, int *pivot, size_t length)
+{
 	for(size_t diagonal = 0; diagonal < length; ++diagonal) {
 		result[diagonal] = value[pivot[diagonal]];
 
