@@ -28,7 +28,11 @@ int main(int argc, char *argv[])
 	SEPARATOR
 	printf("\nLinearne fitovanie\n\n");
 
-	struct Matrix coefficients = solveLinearLeastSquares(positions, temperatureValues(), 5);
+	struct Matrix coefficients = solveLinearLeastSquares(
+			positions,
+			temperatureValues(),
+			arguments.option.polynomialDegree
+	);
 	dumpMatrix(&coefficients);
 
 
