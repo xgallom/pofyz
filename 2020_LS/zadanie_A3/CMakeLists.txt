@@ -7,6 +7,7 @@ set(files
         arguments/arguments.c
         arguments/argumentsTable.c
         arguments/dataFileTables.c
+        arguments/optionTables.c
         arguments/parameterTables.c
 
         core/error.c
