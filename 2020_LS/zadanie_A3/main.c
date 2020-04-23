@@ -1,71 +1,39 @@
 #include "core/rootPath.h"
 #include "arguments/arguments.h"
 #include "data/temperature.h"
-#include "core/matrix.h"
-#include "core/file.h"
+#include "solvers/rungeKutta.h"
+#include "constants.h"
 #include "core/output.h"
-#include "solvers/linearLeastSquares.h"
-#include "equations/polynomial.h"
-#include "equations/general.h"
 
 #include <stdio.h>
-
-#define SEPARATOR for(size_t _n = 0; _n < 80; ++_n) putchar('-');
 
 int main(int argc, char *argv[])
 {
 	const struct Arguments arguments = parseArguments(argc, argv);
 	dumpArguments(&arguments);
 
+	printf("\nInitializing\n\n");
 	initializeRootPath(argc, argv);
 	initializeTemperature(&arguments);
+	initializeConstants(&arguments);
 
 	dumpTemperature();
 
-	const struct Matrix *positions = temperaturePositions();
+	printf("\nSimulating\n\n");
 
+	struct Vector x = vectorDouble(batchSize), v = vectorDouble(batchSize);
+	const size_t length = solveRungeKutta(&x, &v);
 
-	SEPARATOR
-	printf("\nLinearne fitovanie\n\n");
+	printf("\nSimulation took %zu steps\n", length);
 
-	struct Matrix coefficients = solveLinearLeastSquares(
-			positions,
-			temperatureValues(),
-			arguments.option.polynomialDegree
-	);
-	dumpMatrix(&coefficients);
+	printf("\nWriting to file\n\n");
 
+	outputDoubles("runge_kutta.txt", asCDouble(&x), asCDouble(&v), length);
 
-	SEPARATOR
-	printf("\nUkladanie interpolovaneho polynomu do \"temperature_interpolation.txt\"\n\n");
-
-	FILE *outputFile = file("temperature_interpolation.txt", "wt");
-
-	const double
-			minPosition = getAt(positions, 0, 0),
-			maxPosition = getAt(positions, positions->rows - 1, 0),
-			positionDelta = 10.0;
-	const size_t length = (maxPosition - minPosition) / positionDelta;
-
-	double position = minPosition;
-	for(size_t n = 0; n < length; ++n) {
-		const double temperature = kelvinToCelsius(computePolynomial(position, &coefficients));
-		outputRow(outputFile, position, &temperature, 1);
-
-		position += positionDelta;
-	}
-
-	close(outputFile);
-
-
-	SEPARATOR
 	printf("\nClean up\n\n");
-
-	matrixDelete(&coefficients);
 
 	cleanupTemperature();
 	cleanupRootPath();
-
 
 	return 0;
 }
