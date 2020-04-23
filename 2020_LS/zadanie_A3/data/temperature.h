@@ -13,9 +13,7 @@ struct Matrix;
 void initializeTemperature(const struct Arguments *arguments);
 void cleanupTemperature(void);
 
-const struct Matrix *temperaturePositions();
-const struct Matrix *temperatureValues();
-size_t temperatureCount();
+double temperatureFor(double x);
 
 void dumpTemperature(void);
 

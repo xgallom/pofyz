@@ -11,6 +11,8 @@
 #include "../core/toStr.h"
 #include "../arguments/arguments.h"
 #include "../equations/general.h"
+#include "../solvers/linearLeastSquares.h"
+#include "../equations/polynomial.h"
 
 #define FILE_PATH "/data/temperature.txt"
 
@@ -19,27 +21,29 @@
 #define ENTRY_COUNT 2
 
 struct {
-	struct Matrix x, T;
-	struct Vector fileName;
+	struct Matrix coefficients;
 } static data;
 
 void initializeTemperature(const struct Arguments *arguments)
 {
-	if(isNull(&arguments->dataFile.temperature))
-		data.fileName = pathFor(FILE_PATH);
-	else
-		data.fileName = copy(&arguments->dataFile.temperature);
+	struct Vector fileName;
 
-	FILE *inputFile = file(asCString(&data.fileName), "rt");
+	if(isNull(&arguments->dataFile.temperature))
+		fileName = pathFor(FILE_PATH);
+	else
+		fileName = copy(&arguments->dataFile.temperature);
+
+	FILE *inputFile = file(asCString(&fileName), "rt");
 
 	size_t lines = lineCount(inputFile);
 
-	data.x = matrixColumnVectorDouble(lines);
-	data.T = matrixColumnVectorDouble(lines);
+	struct Matrix
+			vectorX = matrixColumnVectorDouble(lines),
+			vectorT = matrixColumnVectorDouble(lines);
 
 	double
-			*x = asMDouble(&data.x),
-			*T = asMDouble(&data.T),
+			*x = asMDouble(&vectorX),
+			*T = asMDouble(&vectorT),
 			parsedBuffer[ENTRY_COUNT];
 	char buffer[BUFSIZ];
 
@@ -64,32 +68,35 @@ void initializeTemperature(const struct Arguments *arguments)
 		}
 	}
 
-	matrixResize(&data.x, x - asMDouble(&data.x), KEEP_SIZE);
-	matrixResize(&data.T, T - asMDouble(&data.T), KEEP_SIZE);
+	matrixResize(&vectorX, x - asMDouble(&vectorX), KEEP_SIZE);
+	matrixResize(&vectorT, T - asMDouble(&vectorT), KEEP_SIZE);
+
+	data.coefficients = solveLinearLeastSquares(
+			&vectorX,
+			&vectorT,
+			arguments->option.polynomialDegree
+	);
+
+	matrixDelete(&vectorX);
+	matrixDelete(&vectorT);
 
 	close(inputFile);
 }
 
 void cleanupTemperature(void)
 {
-	matrixDelete(&data.x);
-	matrixDelete(&data.T);
-	delete(&data.fileName);
+	matrixDelete(&data.coefficients);
 }
 
-const struct Matrix *temperaturePositions() { return &data.x; }
-const struct Matrix *temperatureValues() { return &data.T; }
-size_t temperatureCount() { return data.x.length; }
+double temperatureFor(double x)
+{
+	return computePolynomialUnsafe(x, asCMDouble(&data.coefficients), data.coefficients.length);
+}
 
 void dumpTemperature(void)
 {
-	const double
-			*x = asCMDouble(&data.x),
-			*T = asCMDouble(&data.T);
-	const size_t count = temperatureCount();
-
-	printf("Data from file \"%s\" in format [x, T]:\n", asCString(&data.fileName));
-	for(int i = 0; i < count; ++i)
-		printf("   [%10.2f m, %10.2f K]\n", *x++, *T++);
+	printf("Temperature interpolation coefficients:\n");
+	for(size_t n = 0; n < data.coefficients.length; ++n)
+		printf("%d: %g\n", n, asCMDouble(&data.coefficients)[n]);
 	printf("\n");
 }
