@@ -16,8 +16,7 @@ const char *ParametersTable[PARAMETER_COUNT] = {
 		// OBJECT PARAMETERS
 		DEF(m),
 		DEF(S),
-		DEF(C),
-		DEF(T)
+		DEF(C)
 #undef DEF
 };
 
@@ -31,7 +30,6 @@ const char *ParametersDetailsTable[PARAMETER_COUNT][PARAMETERS_DETAILS_COUNT] = 
 		// OBJECT PARAMETERS
 		DEF(m, "kg", "Mass of falling object"),
 		DEF(S, "m2", "Effective area of falling object"),
-		DEF(C, NULL, "Drag coefficient"),
-		DEF(T, "K", "Temperature of air (deprecated, will be replaced soon with temperature data file)")
+		DEF(C, NULL, "Drag coefficient")
 #undef DEF
 };

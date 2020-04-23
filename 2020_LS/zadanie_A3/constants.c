@@ -16,16 +16,7 @@ double
 double
 		m = 0.0,
 		S = 0.0,
-		C = 0.0,
-		T = 0.0;
-
-// CALCULATED CONSTANT PARAMETERS
-double
-		ro_0 = 0.0,
-		K_0 = 0.0,
-		v_inf2 = 0.0,
-		v_inf = 0.0,
-		kappa = 0.0;
+		C = 0.0;
 
 void initializeConstants(const struct Arguments *arguments)
 {
@@ -40,12 +31,4 @@ void initializeConstants(const struct Arguments *arguments)
 	m = arguments->parameter.m;
 	S = arguments->parameter.S;
 	C = arguments->parameter.C;
-	T = arguments->parameter.T;
-
-	// CALCULATED CONSTANT PARAMETERS
-	ro_0 = M * p_0 / (R * T);
-	K_0 = 0.5 * C * S * ro_0 / m;
-	v_inf2 = g / K_0;
-	v_inf = sqrt(v_inf2);
-	kappa = M * g / (R * T);
 }

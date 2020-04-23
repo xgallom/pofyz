@@ -14,8 +14,7 @@
 #define PARAMETER_m       3
 #define PARAMETER_S       4
 #define PARAMETER_C       5
-#define PARAMETER_T       6
 
-#define PARAMETER_COUNT   7
+#define PARAMETER_COUNT   6
 
 #endif //POFYZ_PARAMETERS_H

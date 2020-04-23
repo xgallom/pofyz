@@ -17,19 +17,11 @@ extern double
 extern double
 		m,
 		S,
-		C,
-		T;
-
-// CALCULATED CONSTANT PARAMETERS
-extern double
-		ro_0,
-		K_0,
-		v_inf2,
-		v_inf,
-		kappa;
+		C;
 
 // FIXED CONSTANT PARAMETERS
-#define steps   500
+#define batchSize   (1u << 10u)
+#define simulationLengthLimit ((1u << 30u) / (sizeof(double) * 2))
 
 #define g       9.80665
 #define R       8.3144598
@@ -41,7 +33,6 @@ extern double
 #define p_O2    (1.0 - p_N2)
 
 #define M       (p_N2 * M_N2 + p_O2 * M_O2)
-#define K(x)    (K_0 * exp(-kappa * (x)))
 
 struct Arguments;
 void initializeConstants(const struct Arguments *arguments);

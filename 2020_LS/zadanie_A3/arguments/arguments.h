@@ -21,8 +21,7 @@ struct Arguments {
 
 					m,
 					S,
-					C,
-					T;
+					C;
 		} parameter;
 	};
 

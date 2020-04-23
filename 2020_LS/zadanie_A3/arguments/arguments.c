@@ -173,15 +173,14 @@ struct Arguments parseArguments(int argc, char *argv[])
 	struct Arguments arguments = {
 			.parameter = {
 					// SIMULATION PARAMETERS
-					.x_0 = 80.0,
+					.x_0 = 31300.0,
 					.v_0 = 0.0,
 					.dt = 0.01,
 
 					// OBJECT PARAMETERS
 					.m = 80.0,
-					.S = 0.2,
-					.C = 0.8,
-					.T = 293.15,
+					.S = 32.0,
+					.C = 1.75,
 			},
 			.option = {
 					.polynomialDegree = 5,
