@@ -23,7 +23,6 @@ set(files
         data/temperature.c
 
         equations/acceleration.c
-        equations/analytical.c
         equations/general.c
         equations/polynomial.c
         equations/velocity.c
