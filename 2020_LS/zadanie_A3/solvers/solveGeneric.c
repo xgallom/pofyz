@@ -6,6 +6,9 @@
 #include "../core/vector.h"
 #include "../constants.h"
 #include "../core/error.h"
+#include "../equations/acceleration.h"
+#include "integrateRiemannSum.h"
+#include "../equations/dynamics.h"
 
 #include <stdio.h>
 
@@ -18,12 +21,17 @@ size_t solveGeneric(SolverIterator solver, struct Vector *x_vec, struct Vector *
 			start = 0,
 			length = x_vec->length;
 
+	struct AccelerationData data = {
+			.oldX = x_0,
+			.oldIntegralT = solveIntegrateRiemannSum(reciprocalTemperatureFor, 0.0, x_0, 2048)
+	};
+
 	for(;;) {
 		double
 				*const x = asDouble(x_vec),
 				*const v = asDouble(v_vec);
 
-		solver(x + start, v + start, length - start);
+		solver(x + start, v + start, length - start, &data);
 
 		printf("Height: %f m\n", x[length - 1]);
 

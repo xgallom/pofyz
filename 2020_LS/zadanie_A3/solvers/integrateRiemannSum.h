@@ -9,6 +9,6 @@
 
 typedef double (IntegralFunction)(double x);
 
-double solveIntegrateRiemannSum(IntegralFunction *function, double xMin, double xMax, size_t steps);
+double solveIntegrateRiemannSum(IntegralFunction function, double xMin, double xMax, size_t steps);
 
 #endif //POFYZ_2020_LS_ZADANIE_A3_SOLVERS_INTEGRATERIEMANNSUM_H

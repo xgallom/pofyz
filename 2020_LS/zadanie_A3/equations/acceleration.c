@@ -6,7 +6,7 @@
 #include "../constants.h"
 #include "dynamics.h"
 
-double acceleration(double x, double v)
+double acceleration(double x, double v, struct AccelerationData *data)
 {
-	return -g + K(x) * v * v;
+	return -g + K(x, &data->oldX, &data->oldIntegralT) * v * v;
 }

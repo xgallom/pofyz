@@ -7,10 +7,10 @@
 #include "../constants.h"
 #include "../equations/acceleration.h"
 
-static void iterateEuler(double *x, double *v, size_t length)
+static void iterateEuler(double *x, double *v, size_t length, struct AccelerationData *data)
 {
 	for(int i = 1; i < length; ++i) {
-		const double a = acceleration(x[i - 1], v[i - 1]);
+		const double a = acceleration(x[i - 1], v[i - 1], data);
 
 		v[i] = v[i - 1] + a * dt;
 		x[i] = x[i - 1] + v[i] * dt;
