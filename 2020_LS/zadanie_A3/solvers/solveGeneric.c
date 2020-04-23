@@ -5,6 +5,9 @@
 #include "solveGeneric.h"
 #include "../core/vector.h"
 #include "../constants.h"
+#include "../core/error.h"
+
+#include <stdio.h>
 
 size_t solveGeneric(SolverIterator solver, struct Vector *x_vec, struct Vector *v_vec)
 {
@@ -22,11 +25,15 @@ size_t solveGeneric(SolverIterator solver, struct Vector *x_vec, struct Vector *
 
 		solver(x + start, v + start, length - start);
 
+		printf("Height: %f m\n", x[length - 1]);
+
 		if(x[length - 1] <= 0.0)
 			break;
 
-		start = resize(x_vec, (length += steps)) - 1;
+		start = resize(x_vec, (length += batchSize)) - 1;
 		resize(v_vec, length);
+
+		fail(length >= simulationLengthLimit, "Simulation length limit exceeded\n");
 	}
 
 	return length;
