@@ -21,7 +21,10 @@ int main(int argc, char *argv[])
 
 	printf("\nSimulating\n\n");
 
-	struct Vector x = vectorDouble(batchSize), v = vectorDouble(batchSize);
+	struct Vector
+			x = vectorDouble(batchSize),
+			v = vectorDouble(batchSize);
+
 	const size_t length = solveRungeKutta(&x, &v);
 
 	printf("\nSimulation took %zu steps\n", length);
@@ -31,6 +34,9 @@ int main(int argc, char *argv[])
 	outputDoubles("runge_kutta.txt", asCDouble(&x), asCDouble(&v), length);
 
 	printf("\nClean up\n\n");
+
+	delete(&x);
+	delete(&v);
 
 	cleanupTemperature();
 	cleanupRootPath();

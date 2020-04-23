@@ -24,8 +24,13 @@ struct {
 	struct Matrix coefficients;
 } static data;
 
-void initializeTemperature(const struct Arguments *arguments)
+struct FileResults {
+	struct Matrix x, T;
+};
+
+static struct FileResults loadTemperatureFile(const struct Arguments *arguments)
 {
+	// Open file
 	struct Vector fileName;
 
 	if(isNull(&arguments->dataFile.temperature))
@@ -35,52 +40,69 @@ void initializeTemperature(const struct Arguments *arguments)
 
 	FILE *inputFile = file(asCString(&fileName), "rt");
 
+	delete(&fileName);
+
 	size_t lines = lineCount(inputFile);
 
-	struct Matrix
-			vectorX = matrixColumnVectorDouble(lines),
-			vectorT = matrixColumnVectorDouble(lines);
+	// Load data
+	struct FileResults result = {
+			.x = matrixColumnVectorDouble(lines),
+			.T = matrixColumnVectorDouble(lines)
+	};
 
 	double
-			*x = asMDouble(&vectorX),
-			*T = asMDouble(&vectorT),
+			*x = asMDouble(&result.x),
+			*T = asMDouble(&result.T),
 			parsedBuffer[ENTRY_COUNT];
 	char buffer[BUFSIZ];
 
 	while(lines--) {
+		// Read line
 		fail(
 				fgets(buffer, BUFSIZ, inputFile) == NULL,
 				"Failed reading line from file \"" FILE_PATH "\"\n"
 		);
 
+		// Parse doubles
 		switch(parseDoubles(buffer, parsedBuffer, ENTRY_COUNT)) {
 			case ENTRY_COUNT:
+				// Exactly 2 doubles
 				*x++ = parsedBuffer[ENTRY_x];
 				*T++ = celsiusToKelvin(parsedBuffer[ENTRY_T]);
 				break;
 
 			case 0:
+				// Empty row
 				break;
 
 			default:
+				// Not exactly 2 doubles
 				close(inputFile);
 				die("Failed parsing " TO_STR(ENTRY_COUNT) " doubles from \"" FILE_PATH "\"\n");
 		}
 	}
 
-	matrixResize(&vectorX, x - asMDouble(&vectorX), KEEP_SIZE);
-	matrixResize(&vectorT, T - asMDouble(&vectorT), KEEP_SIZE);
+	// Resize result
+	matrixResize(&result.x, x - asMDouble(&result.x), KEEP_SIZE);
+	matrixResize(&result.T, T - asMDouble(&result.T), KEEP_SIZE);
+
+	close(inputFile);
+
+	return result;
+}
+
+void initializeTemperature(const struct Arguments *arguments)
+{
+	struct FileResults results = loadTemperatureFile(arguments);
 
 	data.coefficients = solveLinearLeastSquares(
-			&vectorX,
-			&vectorT,
+			&results.x,
+			&results.T,
 			arguments->option.polynomialDegree
 	);
 
-	matrixDelete(&vectorX);
-	matrixDelete(&vectorT);
-
-	close(inputFile);
+	matrixDelete(&results.x);
+	matrixDelete(&results.T);
 }
 
 void cleanupTemperature(void)
@@ -97,6 +119,10 @@ void dumpTemperature(void)
 {
 	printf("Temperature interpolation coefficients:\n");
 	for(size_t n = 0; n < data.coefficients.length; ++n)
-		printf("%d: %g\n", n, asCMDouble(&data.coefficients)[n]);
+		printf("%g x^{%zu} %s",
+			   asCMDouble(&data.coefficients)[n],
+			   n,
+			   n == data.coefficients.length - 1 ? "" : "+ "
+		);
 	printf("\n");
 }

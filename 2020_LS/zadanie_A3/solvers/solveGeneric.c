@@ -33,9 +33,11 @@ size_t solveGeneric(SolverIterator solver, struct Vector *x_vec, struct Vector *
 
 		solver(x + start, v + start, length - start, &data);
 
-		printf("Height: %f m\n", x[length - 1]);
+		const double lastLength = x[length - 1];
 
-		if(x[length - 1] <= 0.0)
+		printf("Height: %f m\n", lastLength);
+
+		if(lastLength <= 0.0)
 			break;
 
 		start = resize(x_vec, (length += batchSize)) - 1;
