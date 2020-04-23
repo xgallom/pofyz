@@ -23,11 +23,13 @@ set(files
         data/temperature.c
 
         equations/acceleration.c
+        equations/dynamics.c
         equations/general.c
         equations/polynomial.c
         equations/velocity.c
 
         solvers/euler.c
+        solvers/integrateRiemannSum.c
         solvers/linearEquationSystem.c
         solvers/linearLeastSquares.c
         solvers/linearLupDecompose.c

@@ -4,6 +4,7 @@
 
 #include "acceleration.h"
 #include "../constants.h"
+#include "dynamics.h"
 
 double acceleration(double x, double v)
 {
