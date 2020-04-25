@@ -5,7 +5,6 @@
 #ifndef POFYZ_2020_LS_ZADANIE_A3_EQUATIONS_DYNAMICS_H
 #define POFYZ_2020_LS_ZADANIE_A3_EQUATIONS_DYNAMICS_H
 
-double reciprocalTemperatureFor(double x);
-double K(double x, double *oldX, double *oldIntegralT);
+double K(double x, double integralT);
 
 #endif //POFYZ_2020_LS_ZADANIE_A3_EQUATIONS_DYNAMICS_H
