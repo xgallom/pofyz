@@ -22,8 +22,8 @@ int main(int argc, char *argv[])
 	printf("\nSimulating\n\n");
 
 	struct Vector
-			x = vectorDouble(batchSize),
-			v = vectorDouble(batchSize);
+			x = vectorDouble(BATCH_SIZE),
+			v = vectorDouble(BATCH_SIZE);
 
 	const size_t length = solveRungeKutta(&x, &v);
 

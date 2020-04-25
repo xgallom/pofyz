@@ -20,8 +20,9 @@ extern double
 		C;
 
 // FIXED CONSTANT PARAMETERS
-#define batchSize   (1u << 10u)
-#define simulationLengthLimit ((1u << 30u) / (sizeof(double) * 2))
+#define BATCH_SIZE   (1u << 10u)
+#define SIMULATION_LENGTH_LIMIT ((1u << 30u) / (sizeof(double) * 2))
+#define INTEGRAL_STEPS (1u << 11u)
 
 #define g       9.80665
 #define R       8.3144598

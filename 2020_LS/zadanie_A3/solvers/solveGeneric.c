@@ -40,10 +40,10 @@ size_t solveGeneric(SolverIterator solver, struct Vector *x_vec, struct Vector *
 		if(lastLength <= 0.0)
 			break;
 
-		start = resize(x_vec, (length += batchSize)) - 1;
+		start = resize(x_vec, (length += BATCH_SIZE)) - 1;
 		resize(v_vec, length);
 
-		fail(length >= simulationLengthLimit, "Simulation length limit exceeded\n");
+		fail(length >= SIMULATION_LENGTH_LIMIT, "Simulation length limit exceeded\n");
 	}
 
 	return length;
