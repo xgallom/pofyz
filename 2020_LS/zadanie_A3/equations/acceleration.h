@@ -10,6 +10,7 @@ struct AccelerationData {
 	double oldIntegralT;
 };
 
+struct AccelerationData initializeAccelerationData();
 double acceleration(double x, double v, struct AccelerationData *data);
 
 #endif //POFYZ_2020_LS_ZADANIE_A_ACCELERATION_H
