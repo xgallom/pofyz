@@ -14,3 +14,11 @@ double solveIntegrateRiemannSum(IntegralFunction function, double xMin, double x
 
 	return delta * sum;
 }
+
+double solveStepRiemannSum(IntegralFunction function, double *oldX, double x, double *oldY)
+{
+	const double delta = x - *oldX, origin = *oldX + delta / 2.0;
+	*oldX = x;
+
+	return (*oldY += function(origin) * delta);
+}
