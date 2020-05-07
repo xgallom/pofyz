@@ -6,7 +6,7 @@
 #include "../data/temperature.h"
 #include "../constants.h"
 
-static double ro(double x, double integralT)
+static inline double ro(double x, double integralT)
 {
 	const double
 			T = temperatureFor(x),
@@ -19,7 +19,18 @@ static double ro(double x, double integralT)
 	return constant * exponential;
 }
 
+static inline double S(double deltaModifier)
+{
+	return S_0 + S_delta / deltaModifier;
+}
+
+static inline double C(double deltaModifier)
+{
+	return C_0 + C_delta / deltaModifier;
+}
+
 double K(double x, double integralT)
 {
-	return 0.5 * C * S * ro(x, integralT) / m;
+	const double deltaModifier = 1.0 + exp((x_delta + x) / x_max);
+	return 0.5 * C(deltaModifier) * S(deltaModifier) * ro(x, integralT) / m;
 }
