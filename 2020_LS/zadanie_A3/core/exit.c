@@ -6,6 +6,11 @@
 
 #include <stdlib.h>
 
+int Success(void)
+{
+	return EXIT_SUCCESS;
+}
+
 void exitSuccess(void)
 {
 	exit(EXIT_SUCCESS);

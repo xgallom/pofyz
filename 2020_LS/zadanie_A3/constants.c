@@ -9,6 +9,7 @@
 // SIMULATION PARAMETERS
 double
 		x_0 = 0.0,
+		x_land = 0.0,
 		v_0 = 0.0,
 		dt = 0.0;
 
@@ -26,6 +27,7 @@ void initializeConstants(const struct Arguments *arguments)
 {
 	// SIMULATION PARAMETERS
 	x_0 = arguments->parameter.x_0;
+	x_land = arguments->parameter.x_land;
 	v_0 = arguments->parameter.v_0;
 	dt = arguments->parameter.dt;
 

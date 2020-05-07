@@ -10,6 +10,7 @@
 // SIMULATION PARAMETERS
 extern double
 		x_0,
+		x_land,
 		v_0,
 		dt;
 

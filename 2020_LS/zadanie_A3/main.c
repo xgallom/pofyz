@@ -5,6 +5,8 @@
 #include "constants.h"
 #include "solvers/statistics.h"
 #include "core/output.h"
+#include "core/exit.h"
+#include "core/file.h"
 
 #include <stdio.h>
 
@@ -13,12 +15,14 @@ int main(int argc, char *argv[])
 	const struct Arguments arguments = parseArguments(argc, argv);
 	dumpArguments(&arguments);
 
+
 	printf("\nInitializing\n\n");
 	initializeRootPath(argc, argv);
 	initializeTemperature(&arguments);
 	initializeConstants(&arguments);
 
 	dumpTemperature();
+
 
 	printf("\nSimulating\n\n");
 
@@ -56,5 +60,8 @@ int main(int argc, char *argv[])
 	cleanupTemperature();
 	cleanupRootPath();
 
-	return 0;
+
+	printf("\nFinished\n\n");
+
+	return Success();
 }
