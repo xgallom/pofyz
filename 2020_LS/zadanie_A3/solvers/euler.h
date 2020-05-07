@@ -9,6 +9,6 @@
 
 struct Vector;
 
-size_t solveEuler(struct Vector *x, struct Vector *v);
+size_t solveEuler(struct Vector *restrict x, struct Vector *restrict v);
 
 #endif //POFYZ_2020_LS_ZADANIE_A_SOLVERS_EULER_H

@@ -7,10 +7,10 @@
 #include "../core/error.h"
 
 void solveLinearLupSolve(
-		struct Matrix *matrixIndex,
-		struct Matrix *results,
-		struct Matrix *values,
-		struct Vector *pivots)
+		struct Matrix *restrict matrixIndex,
+		struct Matrix *restrict results,
+		const struct Matrix *restrict values,
+		const struct Vector *pivots)
 {
 	fail(
 			matrixIndex->rows != matrixIndex->columns,
@@ -36,13 +36,13 @@ void solveLinearLupSolve(
 	solveLinearLupSolveUnsafe(
 			asMDoubleIndex(matrixIndex),
 			asMDouble(results),
-			asMDouble(values),
-			asInt(pivots),
+			asCMDouble(values),
+			asCInt(pivots),
 			matrixIndex->rows
 	);
 }
 
-void solveLinearLupSolveUnsafe(double **index, double *result, double *value, int *pivot, size_t length)
+void solveLinearLupSolveUnsafe(double **index, double *result, const double *value, const int *pivot, size_t length)
 {
 	for(size_t diagonal = 0; diagonal < length; ++diagonal) {
 		result[diagonal] = value[pivot[diagonal]];

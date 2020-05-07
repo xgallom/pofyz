@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 
-size_t solveGeneric(SolverIterator solver, struct Vector *x_vec, struct Vector *v_vec)
+size_t solveGeneric(SolverIterator solver, struct Vector *restrict x_vec, struct Vector *restrict v_vec)
 {
 	asDouble(x_vec)[0] = x_0;
 	asDouble(v_vec)[0] = v_0;

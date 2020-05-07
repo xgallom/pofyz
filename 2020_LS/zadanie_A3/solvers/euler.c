@@ -7,7 +7,7 @@
 #include "../constants.h"
 #include "../equations/acceleration.h"
 
-static void iterateEuler(double *x, double *v, size_t length, struct AccelerationData *data)
+static void iterateEuler(double *restrict x, double *restrict v, size_t length, struct AccelerationData *restrict data)
 {
 	for(int i = 1; i < length; ++i) {
 		const double a = acceleration(x[i - 1], v[i - 1], data);
@@ -17,7 +17,7 @@ static void iterateEuler(double *x, double *v, size_t length, struct Acceleratio
 	}
 }
 
-size_t solveEuler(struct Vector *x, struct Vector *v)
+size_t solveEuler(struct Vector *restrict x, struct Vector *restrict v)
 {
 	return solveGeneric(iterateEuler, x, v);
 }

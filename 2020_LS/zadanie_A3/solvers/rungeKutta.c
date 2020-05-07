@@ -8,7 +8,7 @@
 #include "../equations/acceleration.h"
 #include "../equations/velocity.h"
 
-static void iterateRungeKutta(double *x, double *v, size_t length, struct AccelerationData *data)
+static void iterateRungeKutta(double *restrict x, double *restrict v, size_t length, struct AccelerationData *data)
 {
 	double
 			x_i = x[0],
@@ -36,7 +36,7 @@ static void iterateRungeKutta(double *x, double *v, size_t length, struct Accele
 	}
 }
 
-size_t solveRungeKutta(struct Vector *x, struct Vector *v)
+size_t solveRungeKutta(struct Vector *restrict x, struct Vector *restrict v)
 {
 	return solveGeneric(iterateRungeKutta, x, v);
 }

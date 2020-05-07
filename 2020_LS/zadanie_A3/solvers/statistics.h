@@ -27,6 +27,6 @@ struct Statistics {
 	};
 };
 
-struct Statistics constructStatistics(const double *x, const double *v, size_t length);
+struct Statistics constructStatistics(const double *restrict x, const double *restrict v, size_t length);
 
 #endif //POFYZ_STATISTICS_H

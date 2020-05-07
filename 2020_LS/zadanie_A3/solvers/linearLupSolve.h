@@ -11,16 +11,16 @@ struct Matrix;
 struct Vector;
 
 void solveLinearLupSolve(
-		struct Matrix *matrixIndex,
-		struct Matrix *results,
-		struct Matrix *values,
-		struct Vector *pivots
+		struct Matrix *restrict matrixIndex,
+		struct Matrix *restrict results,
+		const struct Matrix *restrict values,
+		const struct Vector *pivots
 );
 void solveLinearLupSolveUnsafe(
 		double **index,
 		double *result,
-		double *value,
-		int *pivot,
+		const double *value,
+		const int *pivot,
 		size_t length
 );
 
