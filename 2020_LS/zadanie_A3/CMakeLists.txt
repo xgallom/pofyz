@@ -1,5 +1,7 @@
 project(2020_LS_zadanie_A3 C)
 
+set(CMAKE_C_STANDARD 99)
+
 set(files
         main.c
         constants.c
