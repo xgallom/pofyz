@@ -3,10 +3,10 @@
 //
 
 #include "arguments.h"
+#include "printUsage.h"
 #include "tables/argumentsTable.h"
 #include "../core/error.h"
 #include "../core/exit.h"
-#include "printUsage.h"
 
 #include <string.h>
 

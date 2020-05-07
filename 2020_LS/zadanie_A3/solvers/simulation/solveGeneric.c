@@ -3,8 +3,8 @@
 //
 
 #include "solveGeneric.h"
-#include "../../core/vector.h"
 #include "../../constants.h"
+#include "../../core/vector.h"
 #include "../../core/error.h"
 #include "../../equations/simulation/acceleration.h"
 

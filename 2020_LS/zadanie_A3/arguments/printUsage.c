@@ -7,7 +7,6 @@
 #include "tables/parameterTables.h"
 #include "tables/intOptionTables.h"
 #include "tables/stringOptionTables.h"
-
 #include "../core/rootPath.h"
 
 #include <stdio.h>
@@ -83,12 +82,13 @@ static void printIntOptionDescriptions(void)
 
 static void printStringOptionDescriptions(void)
 {
-	for(int i = 0; i < STRINGOPTION_COUNT; ++i)
+	for(int i = 0; i < STRINGOPTION_COUNT; ++i) {
 		printf(
 				"    %16s - %s\n",
 				StringOptionsTable[i],
 				StringOptionsDetailsTable[i][STRINGOPTIONS_DETAILS_DESC]
 		);
+	}
 }
 
 static void printUsageDescription(void)

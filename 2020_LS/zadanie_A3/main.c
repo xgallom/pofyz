@@ -1,12 +1,12 @@
-#include "core/rootPath.h"
-#include "arguments/arguments.h"
-#include "data/temperature.h"
-#include "solvers/simulation/rungeKutta.h"
 #include "constants.h"
-#include "solvers/simulation/statistics.h"
-#include "core/output.h"
+#include "arguments/arguments.h"
 #include "core/exit.h"
 #include "core/file.h"
+#include "core/output.h"
+#include "core/rootPath.h"
+#include "data/temperature.h"
+#include "solvers/simulation/rungeKutta.h"
+#include "solvers/simulation/statistics.h"
 
 #include <stdio.h>
 
@@ -16,12 +16,14 @@ int main(int argc, char *argv[])
 	dumpArguments(&arguments);
 
 
+
 	printf("\nInitializing\n\n");
+
 	initializeRootPath(argc, argv);
 	initializeTemperature(&arguments);
 	initializeConstants(&arguments);
-
 	dumpTemperature();
+
 
 
 	printf("\nSimulating\n\n");
@@ -31,8 +33,8 @@ int main(int argc, char *argv[])
 			v = vectorDouble(BATCH_SIZE);
 
 	const size_t length = solveRungeKutta(&x, &v);
-
 	printf("\nSimulation took %zu steps\n", length);
+
 
 
 	printf("\nWriting simulation to file\n\n");
@@ -40,9 +42,11 @@ int main(int argc, char *argv[])
 	outputDoubles("runge_kutta.txt", asCDouble(&x), asCDouble(&v), length);
 
 
+
 	printf("\nComputing statistics\n\n");
 
 	const struct Statistics statistics = constructStatistics(asCDouble(&x), asCDouble(&v), length);
+
 
 
 	printf("\nWriting statistics to file\n\n");
@@ -52,16 +56,16 @@ int main(int argc, char *argv[])
 	close(statisticsFile);
 
 
+
 	printf("\nClean up\n\n");
 
 	delete(&x);
 	delete(&v);
-
 	cleanupTemperature();
 	cleanupRootPath();
 
 
-	printf("\nFinished\n\n");
 
+	printf("\nFinished\n\n");
 	return Success();
 }

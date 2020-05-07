@@ -3,8 +3,8 @@
 //
 
 #include "dynamics.h"
-#include "../../data/temperature.h"
 #include "../../constants.h"
+#include "../../data/temperature.h"
 
 static inline double ro(double x, double integralT)
 {

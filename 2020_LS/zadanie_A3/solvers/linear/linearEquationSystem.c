@@ -3,11 +3,11 @@
 //
 
 #include "linearLeastSquares.h"
-#include "../../core/matrix.h"
-#include "../../core/error.h"
 #include "linearLupDecompose.h"
 #include "linearLupSolve.h"
 #include "linearLupNormalize.h"
+#include "../../core/matrix.h"
+#include "../../core/error.h"
 
 static struct Vector preparePivots(size_t length)
 {

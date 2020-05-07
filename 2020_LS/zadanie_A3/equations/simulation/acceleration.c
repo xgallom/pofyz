@@ -3,10 +3,10 @@
 //
 
 #include "acceleration.h"
-#include "../../constants.h"
 #include "dynamics.h"
-#include "../../solvers/integrateRiemannSum.h"
+#include "../../constants.h"
 #include "../../data/temperature.h"
+#include "../../solvers/integrateRiemannSum.h"
 
 static double reciprocalTemperatureFor(double x)
 {

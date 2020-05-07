@@ -4,7 +4,6 @@
 
 #include "linearLupNormalize.h"
 #include "../../core/matrix.h"
-#include "../../core/swap.h"
 #include "../../core/matrixOperations.h"
 #include "../../core/error.h"
 
