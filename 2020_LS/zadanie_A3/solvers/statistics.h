@@ -8,11 +8,14 @@
 #include <stddef.h>
 
 #define STATISTIC_t_fall 0
-#define STATISTIC_v_fall 1
-#define STATISTIC_v_max  2
-#define STATISTIC_z_vmax 3
+#define STATISTIC_x_fall 1
+#define STATISTIC_v_fall 2
 
-#define STATISTIC_COUNT  4
+#define STATISTIC_t_vmax 3
+#define STATISTIC_x_vmax 4
+#define STATISTIC_v_max  5
+
+#define STATISTIC_COUNT  6
 
 struct Statistics {
 	union {
@@ -20,9 +23,12 @@ struct Statistics {
 		struct {
 			double
 					t_fall,
+					x_fall,
 					v_fall,
-					v_max,
-					x_vmax;
+
+					t_vmax,
+					x_vmax,
+					v_max;
 		} statistic;
 	};
 };

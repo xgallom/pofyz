@@ -11,5 +11,6 @@
 void outputDouble(const char *filePath, const double *vector, size_t length);
 void outputDoubles(const char *filePath, const double *vector1, const double *vector2, size_t length);
 void outputRow(FILE *outputFile, double index, const double *vector, size_t length);
+void outputStatistics(FILE *outputFile, const char *index, const double *vector, size_t length);
 
 #endif //POFYZ_2020_LS_ZADANIE_A2_CORE_OUTPUT_H

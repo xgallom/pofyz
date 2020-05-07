@@ -29,9 +29,23 @@ int main(int argc, char *argv[])
 
 	printf("\nSimulation took %zu steps\n", length);
 
-	printf("\nWriting to file\n\n");
+
+	printf("\nWriting simulation to file\n\n");
 
 	outputDoubles("runge_kutta.txt", asCDouble(&x), asCDouble(&v), length);
+
+
+	printf("\nComputing statistics\n\n");
+
+	const struct Statistics statistics = constructStatistics(asCDouble(&x), asCDouble(&v), length);
+
+
+	printf("\nWriting statistics to file\n\n");
+
+	FILE *statisticsFile = file("statistics.txt", "at");
+	outputStatistics(statisticsFile, asCString(&arguments.stringOption.name), statistics.statistics, STATISTIC_COUNT);
+	close(statisticsFile);
+
 
 	printf("\nClean up\n\n");
 
