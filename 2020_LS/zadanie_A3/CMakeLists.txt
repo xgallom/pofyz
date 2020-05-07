@@ -7,11 +7,11 @@ set(files
         constants.c
 
         arguments/arguments.c
-        arguments/argumentsTable.c
+        arguments/tables/argumentsTable.c
         arguments/dumpArguments.c
-        arguments/stringOptionTables.c
-        arguments/intOptionTables.c
-        arguments/parameterTables.c
+        arguments/tables/stringOptionTables.c
+        arguments/tables/intOptionTables.c
+        arguments/tables/parameterTables.c
         arguments/printUsage.c
 
         core/error.c
@@ -26,22 +26,22 @@ set(files
 
         data/temperature.c
 
-        equations/acceleration.c
-        equations/dynamics.c
+        equations/simulation/acceleration.c
+        equations/simulation/dynamics.c
         equations/general.c
         equations/polynomial.c
-        equations/velocity.c
+        equations/simulation/velocity.c
 
-        solvers/euler.c
+        solvers/simulation/euler.c
         solvers/integrateRiemannSum.c
-        solvers/linearEquationSystem.c
-        solvers/linearLeastSquares.c
-        solvers/linearLupDecompose.c
-        solvers/linearLupNormalize.c
-        solvers/linearLupSolve.c
-        solvers/rungeKutta.c
-        solvers/solveGeneric.c
-        solvers/statistics.c
+        solvers/linear/linearEquationSystem.c
+        solvers/linear/linearLeastSquares.c
+        solvers/linear/linearLupDecompose.c
+        solvers/linear/linearLupNormalize.c
+        solvers/linear/linearLupSolve.c
+        solvers/simulation/rungeKutta.c
+        solvers/simulation/solveGeneric.c
+        solvers/simulation/statistics.c
         )
 
 add_executable(2020_LS_zadanie_A3 ${files})

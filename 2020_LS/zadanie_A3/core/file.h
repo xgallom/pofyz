@@ -2,8 +2,8 @@
 // Created by xgallom on 3/18/20.
 //
 
-#ifndef POFYZ_2020_LS_ZADANIE_A2_CORE_FILE_H
-#define POFYZ_2020_LS_ZADANIE_A2_CORE_FILE_H
+#ifndef POFYZ_2020_LS_ZADANIE_A3_CORE_FILE_H
+#define POFYZ_2020_LS_ZADANIE_A3_CORE_FILE_H
 
 #include <stdio.h>
 
@@ -15,4 +15,4 @@ size_t lineCount(FILE *file);
 fpos_t filePosition(FILE *file);
 void setFilePosition(FILE *file, const fpos_t *position);
 
-#endif //POFYZ_2020_LS_ZADANIE_A2_CORE_FILE_H
+#endif //POFYZ_2020_LS_ZADANIE_A3_CORE_FILE_H

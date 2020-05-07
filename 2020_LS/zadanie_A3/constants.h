@@ -2,8 +2,8 @@
 // Created by xgallom on 3/12/20.
 //
 
-#ifndef POFYZ_2020_LS_ZADANIE_A_CONSTANTS_H
-#define POFYZ_2020_LS_ZADANIE_A_CONSTANTS_H
+#ifndef POFYZ_2020_LS_ZADANIE_A3_CONSTANTS_H
+#define POFYZ_2020_LS_ZADANIE_A3_CONSTANTS_H
 
 #include <math.h>
 
@@ -43,4 +43,4 @@ extern double
 struct Arguments;
 void initializeConstants(const struct Arguments *arguments);
 
-#endif //POFYZ_2020_LS_ZADANIE_A_CONSTANTS_H
+#endif //POFYZ_2020_LS_ZADANIE_A3_CONSTANTS_H

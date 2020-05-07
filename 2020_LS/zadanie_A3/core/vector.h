@@ -2,8 +2,8 @@
 // Created by xgallom on 3/18/20.
 //
 
-#ifndef POFYZ_2020_LS_ZADANIE_A2_CORE_VECTOR_H
-#define POFYZ_2020_LS_ZADANIE_A2_CORE_VECTOR_H
+#ifndef POFYZ_2020_LS_ZADANIE_A3_CORE_VECTOR_H
+#define POFYZ_2020_LS_ZADANIE_A3_CORE_VECTOR_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -49,4 +49,4 @@ const char *asCString(const struct Vector *vector);
 void dumpVectorImpl(const struct Vector *vector, const char *name);
 #define dumpVector(vector) dumpVectorImpl(vector, #vector)
 
-#endif //POFYZ_2020_LS_ZADANIE_A2_CORE_VECTOR_H
+#endif //POFYZ_2020_LS_ZADANIE_A3_CORE_VECTOR_H

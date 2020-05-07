@@ -4,9 +4,9 @@
 
 #include "printUsage.h"
 #include "arguments.h"
-#include "parameterTables.h"
-#include "intOptionTables.h"
-#include "stringOptionTables.h"
+#include "tables/parameterTables.h"
+#include "tables/intOptionTables.h"
+#include "tables/stringOptionTables.h"
 
 #include "../core/rootPath.h"
 

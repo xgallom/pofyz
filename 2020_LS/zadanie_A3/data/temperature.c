@@ -11,7 +11,7 @@
 #include "../core/toStr.h"
 #include "../arguments/arguments.h"
 #include "../equations/general.h"
-#include "../solvers/linearLeastSquares.h"
+#include "../solvers/linear/linearLeastSquares.h"
 #include "../equations/polynomial.h"
 
 #define FILE_PATH "/data/temperature.txt"

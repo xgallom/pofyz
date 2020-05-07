@@ -3,7 +3,7 @@
 //
 
 #include "arguments.h"
-#include "argumentsTable.h"
+#include "tables/argumentsTable.h"
 #include "../core/error.h"
 #include "../core/exit.h"
 #include "printUsage.h"

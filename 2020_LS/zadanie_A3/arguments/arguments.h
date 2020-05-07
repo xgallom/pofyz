@@ -2,12 +2,12 @@
 // Created by xgallom on 3/18/20.
 //
 
-#ifndef POFYZ_2020_LS_ZADANIE_A2_ARGUMENTS_H
-#define POFYZ_2020_LS_ZADANIE_A2_ARGUMENTS_H
+#ifndef POFYZ_2020_LS_ZADANIE_A3_ARGUMENTS_ARGUMENTS_H
+#define POFYZ_2020_LS_ZADANIE_A3_ARGUMENTS_ARGUMENTS_H
 
-#include "parameters.h"
-#include "intOptions.h"
-#include "stringOptions.h"
+#include "arguments/parameters.h"
+#include "arguments/intOptions.h"
+#include "arguments/stringOptions.h"
 #include "../core/vector.h"
 
 #define HELP_ARGUMENT "--help"
@@ -54,4 +54,4 @@ struct Arguments parseArguments(int argc, char *argv[]);
 
 #include "dumpArguments.h"
 
-#endif //POFYZ_2020_LS_ZADANIE_A2_ARGUMENTS_H
+#endif //POFYZ_2020_LS_ZADANIE_A3_ARGUMENTS_ARGUMENTS_H
