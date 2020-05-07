@@ -15,8 +15,12 @@ double
 // OBJECT PARAMETERS
 double
 		m = 0.0,
-		S = 0.0,
-		C = 0.0;
+		x_delta = 0.0,
+		x_max = 0.0,
+		S_0 = 0.0,
+		S_delta = 0.0,
+		C_0 = 0.0,
+		C_delta = 0.0;
 
 void initializeConstants(const struct Arguments *arguments)
 {
@@ -29,6 +33,10 @@ void initializeConstants(const struct Arguments *arguments)
 
 	// OBJECT PARAMETERS
 	m = arguments->parameter.m;
-	S = arguments->parameter.S;
-	C = arguments->parameter.C;
+	x_delta = arguments->parameter.x_open - x_0;
+	x_max = arguments->parameter.x_max;
+	S_0 = arguments->parameter.S_0;
+	S_delta = arguments->parameter.S_max - S_0;
+	C_0 = arguments->parameter.C_0;
+	C_delta = arguments->parameter.C_max - C_0;
 }

@@ -16,8 +16,12 @@ extern double
 // OBJECT PARAMETERS
 extern double
 		m,
-		S,
-		C;
+		x_delta,
+		x_max,
+		S_0,
+		S_delta,
+		C_0,
+		C_delta;
 
 // FIXED CONSTANT PARAMETERS
 #define BATCH_SIZE   (1u << 10u)
