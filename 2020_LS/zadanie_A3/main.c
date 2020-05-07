@@ -3,6 +3,7 @@
 #include "data/temperature.h"
 #include "solvers/rungeKutta.h"
 #include "constants.h"
+#include "solvers/statistics.h"
 #include "core/output.h"
 
 #include <stdio.h>

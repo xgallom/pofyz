@@ -15,6 +15,8 @@ size_t solveGeneric(SolverIterator solver, struct Vector *restrict x_vec, struct
 	asDouble(x_vec)[0] = x_0;
 	asDouble(v_vec)[0] = v_0;
 
+	const double xFinal = x_land;
+
 	size_t
 			start = 0,
 			length = x_vec->length;
@@ -32,7 +34,7 @@ size_t solveGeneric(SolverIterator solver, struct Vector *restrict x_vec, struct
 
 		printf("Height: %f m\n", lastLength);
 
-		if(lastLength <= 0.0)
+		if(lastLength <= xFinal)
 			break;
 
 		start = resize(x_vec, (length += BATCH_SIZE)) - 1;

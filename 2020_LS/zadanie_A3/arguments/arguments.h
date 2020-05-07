@@ -6,9 +6,11 @@
 #define POFYZ_2020_LS_ZADANIE_A2_ARGUMENTS_H
 
 #include "parameters.h"
-#include "options.h"
-#include "dataFiles.h"
+#include "intOptions.h"
+#include "stringOptions.h"
 #include "../core/vector.h"
+
+#define HELP_ARGUMENT "--help"
 
 struct Arguments {
 	union {
@@ -16,6 +18,7 @@ struct Arguments {
 		struct {
 			double
 					x_0,
+					x_land,
 					v_0,
 					dt,
 
@@ -30,23 +33,25 @@ struct Arguments {
 	};
 
 	union {
-		int options[OPTION_COUNT];
+		int intOptions[INTOPTION_COUNT];
 		struct {
 			int
 					polynomialDegree;
-		} option;
+		} intOption;
 	};
 
 	union {
-		struct Vector dataFiles[DATAFILE_COUNT];
+		struct Vector stringOptions[STRINGOPTION_COUNT];
 		struct {
 			struct Vector
-					temperature;
-		} dataFile;
+					temperature,
+					name;
+		} stringOption;
 	};
 };
 
 struct Arguments parseArguments(int argc, char *argv[]);
-void dumpArguments(const struct Arguments *arguments);
+
+#include "dumpArguments.h"
 
 #endif //POFYZ_2020_LS_ZADANIE_A2_ARGUMENTS_H

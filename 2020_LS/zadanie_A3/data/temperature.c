@@ -33,10 +33,10 @@ static struct FileResults loadTemperatureFile(const struct Arguments *arguments)
 	// Open file
 	struct Vector fileName;
 
-	if(isNull(&arguments->dataFile.temperature))
+	if(isNull(&arguments->stringOption.temperature))
 		fileName = pathFor(FILE_PATH);
 	else
-		fileName = copy(&arguments->dataFile.temperature);
+		fileName = copy(&arguments->stringOption.temperature);
 
 	FILE *inputFile = file(asCString(&fileName), "rt");
 
@@ -98,7 +98,7 @@ void initializeTemperature(const struct Arguments *arguments)
 	data.coefficients = solveLinearLeastSquares(
 			&results.x,
 			&results.T,
-			arguments->option.polynomialDegree
+			arguments->intOption.polynomialDegree
 	);
 
 	matrixDelete(&results.x);

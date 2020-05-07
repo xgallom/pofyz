@@ -3,112 +3,17 @@
 //
 
 #include "arguments.h"
-#include "parameterTables.h"
-#include "optionTables.h"
-#include "dataFileTables.h"
 #include "argumentsTable.h"
 #include "../core/error.h"
 #include "../core/exit.h"
-#include "../core/rootPath.h"
+#include "printUsage.h"
 
-#include <stdio.h>
 #include <string.h>
 
 #define FIRST_ARGUMENT 1
 
-#define HELP_ARGUMENT "--help"
 #define DASH_CHARACTER '-'
 #define SPLIT_CHARACTER '='
-#define MAX_WIDTH 80
-
-static void printUsage()
-{
-	char buffer[BUFSIZ];
-	sprintf(buffer, "Usage: " PROGRAM_NAME);
-	printf("%s", buffer);
-
-	const size_t offsetStart = strlen(buffer);
-	size_t currentLength = offsetStart;
-
-	for(int i = 0; i < PARAMETER_COUNT; ++i) {
-		sprintf(buffer, " [--%s={double}]", ParametersTable[i]);
-		const size_t length = strlen(buffer);
-
-		if(currentLength + length > MAX_WIDTH) {
-			printf("\n%*c", (int) offsetStart, ' ');
-			currentLength = offsetStart;
-		}
-
-		printf("%s", buffer);
-		currentLength += length;
-	}
-	for(int i = 0; i < OPTION_COUNT; ++i) {
-		sprintf(buffer, " [--%s={int}]", OptionsTable[i]);
-		const size_t length = strlen(buffer);
-
-		if(currentLength + length > MAX_WIDTH) {
-			printf("\n%*c", (int) offsetStart, ' ');
-			currentLength = offsetStart;
-		}
-
-		printf("%s", buffer);
-		currentLength += length;
-	}
-	for(int i = 0; i < DATAFILE_COUNT; ++i) {
-		sprintf(buffer, " [--%s={path}]", DataFilesTable[i]);
-		const size_t length = strlen(buffer);
-
-		if(currentLength + length > MAX_WIDTH) {
-			printf("\n%*c", (int) offsetStart, ' ');
-			currentLength = offsetStart;
-		}
-
-		printf("%s", buffer);
-		currentLength += length;
-	}
-
-	sprintf(buffer, " [" HELP_ARGUMENT "]");
-	const size_t length = strlen(buffer);
-	if(currentLength + length > MAX_WIDTH)
-		printf("\n%*c", (int) offsetStart, ' ');
-	printf("%s\n\n", buffer);
-
-	printf("  Executes program with custom parameters:\n");
-	char unitRepresentation[6] = {};
-	for(int i = 0; i < PARAMETER_COUNT; ++i) {
-		const char *unit = ParametersDetailsTable[i][PARAMETERS_DETAILS_UNIT];
-		snprintf(unitRepresentation, 6, "[%s]", unit ? unit : "-");
-		printf(
-				"    %10s %-5s - %s\n",
-				ParametersTable[i],
-				unitRepresentation,
-				ParametersDetailsTable[i][PARAMETERS_DETAILS_DESC]
-		);
-	}
-
-	printf("\n  Executes program with custom options:\n");
-	for(int i = 0; i < OPTION_COUNT; ++i)
-		printf(
-				"    %16s - %s\n",
-				OptionsTable[i],
-				OptionsDetailsTable[i][DATAFILES_DETAILS_DESC]
-		);
-
-	printf("\n  Executes program with custom data files:\n");
-	for(int i = 0; i < DATAFILE_COUNT; ++i)
-		printf(
-				"    %16s - %s\n",
-				DataFilesTable[i],
-				DataFilesDetailsTable[i][DATAFILES_DETAILS_DESC]
-		);
-
-	printf("\n  Executes program with flags:\n"
-		   "    %16s - %s\n"
-		   "\n",
-		   HELP_ARGUMENT,
-		   "Prints this usage"
-	);
-}
 
 static inline void invalidArgument(int check, int index, const char *argument)
 {
@@ -186,11 +91,12 @@ struct Arguments parseArguments(int argc, char *argv[])
 					.C_0 = 0.8,
 					.C_max = 1.75,
 			},
-			.option = {
+			.intOption = {
 					.polynomialDegree = 5,
 			},
-			.dataFile = {
+			.stringOption = {
 					.temperature = NULL_VECTOR,
+					.name = stringFrom("untitled"),
 			}
 	};
 
@@ -215,42 +121,3 @@ struct Arguments parseArguments(int argc, char *argv[])
 	return arguments;
 }
 
-void dumpArguments(const struct Arguments *arguments)
-{
-	printf("Simulating with parameters:\n");
-	for(int i = 0; i < PARAMETER_COUNT; ++i) {
-		const char *unit = ParametersDetailsTable[i][PARAMETERS_DETAILS_UNIT];
-
-		printf(
-				"    %16s = %8.2f %s\n",
-				ParametersTable[i],
-				arguments->parameters[i],
-				unit ? unit : ""
-		);
-	}
-
-	printf("\nSimulating with options:\n");
-	for(int i = 0; i < OPTION_COUNT; ++i) {
-		printf(
-				"    %16s : %d\n",
-				OptionsTable[i],
-				arguments->options[i]
-		);
-	}
-
-	printf("\nSimulating with dataFiles:\n");
-	for(int i = 0; i < DATAFILE_COUNT; ++i) {
-		const char *dataFile = asCString(arguments->dataFiles + i);
-
-		if(dataFile)
-			printf(
-					"    %16s : \"%s\"\n",
-					DataFilesTable[i],
-					dataFile
-			);
-		else
-			printf("    %16s : <default>\n", DataFilesTable[i]);
-	}
-
-	printf("\n");
-}

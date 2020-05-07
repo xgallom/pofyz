@@ -7,18 +7,19 @@
 
 // SIMULATION PARAMETERS
 #define PARAMETER_x_0     0
-#define PARAMETER_v_0     1
-#define PARAMETER_dt      2
+#define PARAMETER_x_land  1
+#define PARAMETER_v_0     2
+#define PARAMETER_dt      3
 
 // OBJECT PARAMETERS
-#define PARAMETER_m       3
-#define PARAMETER_x_open  4
-#define PARAMETER_x_max   5
-#define PARAMETER_S_0     6
-#define PARAMETER_S_max   7
-#define PARAMETER_C_0     8
-#define PARAMETER_C_max   9
+#define PARAMETER_m       4
+#define PARAMETER_x_open  5
+#define PARAMETER_x_max   6
+#define PARAMETER_S_0     7
+#define PARAMETER_S_max   8
+#define PARAMETER_C_0     9
+#define PARAMETER_C_max   10
 
-#define PARAMETER_COUNT   10
+#define PARAMETER_COUNT   11
 
 #endif //POFYZ_PARAMETERS_H

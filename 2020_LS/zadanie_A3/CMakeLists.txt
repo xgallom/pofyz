@@ -8,9 +8,11 @@ set(files
 
         arguments/arguments.c
         arguments/argumentsTable.c
-        arguments/dataFileTables.c
-        arguments/optionTables.c
+        arguments/dumpArguments.c
+        arguments/stringOptionTables.c
+        arguments/intOptionTables.c
         arguments/parameterTables.c
+        arguments/printUsage.c
 
         core/error.c
         core/exit.c
