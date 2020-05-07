@@ -179,8 +179,12 @@ struct Arguments parseArguments(int argc, char *argv[])
 
 					// OBJECT PARAMETERS
 					.m = 80.0,
-					.S = 32.0,
-					.C = 1.75,
+					.x_open = 0.0,
+					.x_max = 200.0,
+					.S_0 = 0.2,
+					.S_max = 32.0,
+					.C_0 = 0.8,
+					.C_max = 1.75,
 			},
 			.option = {
 					.polynomialDegree = 5,

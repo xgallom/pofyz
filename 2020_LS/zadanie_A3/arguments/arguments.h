@@ -20,8 +20,12 @@ struct Arguments {
 					dt,
 
 					m,
-					S,
-					C;
+					x_open,
+					x_max,
+					S_0,
+					S_max,
+					C_0,
+					C_max;
 		} parameter;
 	};
 

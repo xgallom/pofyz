@@ -12,9 +12,13 @@
 
 // OBJECT PARAMETERS
 #define PARAMETER_m       3
-#define PARAMETER_S       4
-#define PARAMETER_C       5
+#define PARAMETER_x_open  4
+#define PARAMETER_x_max   5
+#define PARAMETER_S_0     6
+#define PARAMETER_S_max   7
+#define PARAMETER_C_0     8
+#define PARAMETER_C_max   9
 
-#define PARAMETER_COUNT   6
+#define PARAMETER_COUNT   10
 
 #endif //POFYZ_PARAMETERS_H
